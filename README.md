@@ -1,6 +1,4 @@
 #sb_attendance
+#### attendance extension for contao CMS
 
-### attendance extension for contao CMS
-
-It allowes you to manage attandance of members for calendar events
-
+sb_attandance allowes you to manage attandance of members for calendar events
