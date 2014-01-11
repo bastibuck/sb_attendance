@@ -1,0 +1,50 @@
+/* adjust member-roles field */
+.tl_info_fix 
+{
+	height: 48px;
+}
+
+.tl_info_fix p.tl_help
+{
+cursor:auto;
+font-size: 1em;
+}
+
+.tl_info_fix input.tl_text
+{
+	display: none;
+}
+
+/* Firefox-only solution */
+.al_optionSet
+{
+	margin-bottom: 40px;
+}
+
+.al_optionSet select.tl_select
+{
+	height: 22px;
+}
+
+.al_optionSet option
+{
+	padding: 20px;
+	padding-left: 110px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
+.al_optionSet option[value="flat_thick"]
+{
+	background-image: url("../img/flat_thick_icon_set/flat_thick_icon_set.png");	
+}
+
+.al_optionSet option[value="flat_thick_alternative"]
+{
+	background-image: url("../img/flat_thick_alternative_icon_set/flat_thick_alternative_icon_set.png");	
+}
+
+.al_optionSet option[value="flat_thin"]
+{
+	background-image: url("../img/flat_thin_icon_set/flat_thin_icon_set.png");	
+}

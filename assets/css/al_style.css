@@ -1,0 +1,86 @@
+/**
+ * CSS Attendance List Module
+ *
+ * @copyright  Sebastian Buck 2013
+ * @author     Sebastian Buck
+ * @package    Attendance
+ */
+
+ 
+/* General definitons */
+
+.mod_attendance_list table
+{
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+.mod_attendance_list tbody tr
+{
+	border-top: 1px dashed #ccc;
+}
+
+.mod_attendance_list tr.odd
+{
+	background: #ddd;
+}
+
+.mod_attendance_list td
+{
+	text-align: center;
+	width: 50px;
+	padding: 3px 5px;
+	border-left: 1px dashed #ccc;
+}
+
+.mod_attendance_list td.col_member
+{
+	text-align: left;
+	width: auto;
+	border: 0px;
+}
+
+/* User definitons  */
+
+.mod_attendance_list tr.logged_user
+{
+	border-top: 1px dashed #f00;
+	border-bottom: 1px dashed #f00;
+}
+
+.mod_attendance_list tr.coach
+{
+	border-bottom: #666 3px double;
+}
+
+.mod_attendance_list tr.coach i
+{
+	font-size: 0.75em;
+}
+
+/* Event data definitions */
+
+.mod_attendance_list thead td, .mod_attendance_list td.tableFoot
+{
+	vertical-align: top;
+	font-size: 0.8em;	
+}
+
+.mod_attendance_list thead td p.al_title
+{
+	min-height: 50px;
+	margin-bottom: 10px;
+}
+
+.mod_attendance_list thead td p.al_date
+{
+	min-height: 35px;
+	margin-bottom: 10px;	
+}
+
+/* Expired fields */
+
+.mod_attendance_list td.expired
+{
+	background: #bbb;
+}
