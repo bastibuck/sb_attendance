@@ -19,6 +19,7 @@
 // Legends
 $GLOBALS['TL_LANG']['tl_module']['attendance_calender_legend'] = 'Kalender-Auswahl';
 $GLOBALS['TL_LANG']['tl_module']['attendance_show_legend'] = 'Abgelaufene Termine und Sperrzeiten';
+$GLOBALS['TL_LANG']['tl_module']['attendance_statusOptions_legend'] = 'Statusoptionen';
 $GLOBALS['TL_LANG']['tl_module']['attendance_memberRoles_legend'] = 'Mitglieder markieren';
 $GLOBALS['TL_LANG']['tl_module']['attendance_style_legend'] = 'Darstellungsoptionen';
 
@@ -31,6 +32,9 @@ $GLOBALS['TL_LANG']['tl_module']['al_expiredEvents'][1] = 'Wie viele abgelaufene
 
 $GLOBALS['TL_LANG']['tl_module']['al_expireTime'][0] = 'Sperrzeit von Terminen';
 $GLOBALS['TL_LANG']['tl_module']['al_expireTime'][1] = 'Legen Sie die Sperrzeit (in Stunden) fest, ab wann die Statusänderungen vor einem Termin gesperrt werden sollen.';
+
+$GLOBALS['TL_LANG']['tl_module']['al_disableThird'][0] = 'Dritte Option deaktivieren';
+$GLOBALS['TL_LANG']['tl_module']['al_disableThird'][1] = 'Die Dritte Statusoption "komme später" wird hierüber de/aktiviert.';
 
 $GLOBALS['TL_LANG']['tl_module']['al_roleAdvice'][0] = ' ';
 $GLOBALS['TL_LANG']['tl_module']['al_roleAdvice'][1] = 'Hinweis: Die Vergabe von Mitgliederrollen kann in der Mitgliederverwaltung vorgenommen werden.';

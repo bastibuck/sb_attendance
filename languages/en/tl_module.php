@@ -14,6 +14,7 @@
 // Legends
 $GLOBALS['TL_LANG']['tl_module']['attendance_calender_legend'] = 'Calendar options';
 $GLOBALS['TL_LANG']['tl_module']['attendance_show_legend'] = 'Expired events and locking time';
+$GLOBALS['TL_LANG']['tl_module']['attendance_statusOptions_legend'] = 'Status options';
 $GLOBALS['TL_LANG']['tl_module']['attendance_memberRoles_legend'] = 'Member roles';
 $GLOBALS['TL_LANG']['tl_module']['attendance_style_legend'] = 'Display options';
 
@@ -26,6 +27,9 @@ $GLOBALS['TL_LANG']['tl_module']['al_expiredEvents'][1] = 'How many expired even
 
 $GLOBALS['TL_LANG']['tl_module']['al_expireTime'][0] = 'Locking time for events';
 $GLOBALS['TL_LANG']['tl_module']['al_expireTime'][1] = 'Set a locking time (in hours) for events. No more status changes are allowed afterwards.';
+
+$GLOBALS['TL_LANG']['tl_module']['al_disableThird'][0] = 'Disable third option';
+$GLOBALS['TL_LANG']['tl_module']['al_disableThird'][1] = 'Third status option "later" will be disabled/enabled.';
 
 $GLOBALS['TL_LANG']['tl_module']['al_roleAdvice'][0] = ' ';
 $GLOBALS['TL_LANG']['tl_module']['al_roleAdvice'][1] = 'Tip: Member roles can be managed in the member settings.';

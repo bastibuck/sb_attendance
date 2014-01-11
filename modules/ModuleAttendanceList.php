@@ -34,42 +34,6 @@ class ModuleAttendanceList extends \Module
 	 */
 	protected function compile()
 	{	
-		/**
-		 * Statusänderung
-		 */
-			// Überprüfen, ob POST-Variablen gesetzt sind, also ein Status geändert werden sollte
-			if ($this->Input->post('m_id'))
-			{
-				// Variablen mit POST-Werten belegen
-				$POST_m_id = $this->Input->post('m_id');
-				$POST_e_id = $this->Input->post('e_id');
-				$POST_status = $this->Input->post('status');
-				
-				// Statusänderung
-				switch ($POST_status) 
-					{
-						case 0:
-							$POST_status = 1;							
-							break;
-						case 1:
-							$POST_status = 2;							
-							break;
-						case 2:
-							$POST_status = 3;							
-							break;
-						case 3:
-							$POST_status = 1;							
-							break;
-					}
-				
-				// akteulle Uhrzeit als Zeitstempel
-				$time = time();
-				
-				// Eintragen in DB
-				$changeStatus = Database::getInstance()
-						->prepare('UPDATE tl_attendance SET attendance=?,tstamp=? WHERE m_id=? AND e_id=?')
-						->execute($POST_status,$time,$POST_m_id,$POST_e_id);			
-			}
 		
 		
 		/**
@@ -93,6 +57,10 @@ class ModuleAttendanceList extends \Module
 			$result = Database::getInstance()->prepare('SELECT al_useCSS FROM tl_module WHERE type=?')->limit(1)->execute(attendance_list);
 			$useCSS = $result->al_useCSS;
 			
+			// dritte Option-Status laden
+			$result = Database::getInstance()->prepare('SELECT al_disableThird FROM tl_module WHERE type=?')->limit(1)->execute(attendance_list);
+			$disableThird = $result->al_disableThird;
+			
 			// Trainer suchen
 			$result = Database::getInstance()->prepare('SELECT id FROM tl_member WHERE al_coachRole=?')->execute(1);		
 			$coach = $result->id;
@@ -114,6 +82,58 @@ class ModuleAttendanceList extends \Module
 		 * ENDE: Daten aus Datenbank laden
 		 */
 		 
+		 
+		 
+		 /**
+		 * Statusänderung
+		 */
+			// Überprüfen, ob POST-Variablen gesetzt sind, also ein Status geändert werden sollte
+			if ($this->Input->post('m_id'))
+			{
+				// Variablen mit POST-Werten belegen
+				$POST_m_id = $this->Input->post('m_id');
+				$POST_e_id = $this->Input->post('e_id');
+				$POST_status = $this->Input->post('status');
+				
+				// Statusänderung
+				switch ($POST_status) 
+					{
+						case 0:
+							$POST_status = 1;							
+							break;
+						case 1:
+							$POST_status = 2;							
+							break;
+						case 2:
+							// Wenn 'Dritte Option deaktivieren' gesetzt wurde, direkt wieder Status 1 setzen
+							if ($disableThird==1)
+							{
+								$POST_status = 1;
+							}
+							else
+							{
+								$POST_status = 3;
+							}
+							break;
+						case 3:
+							$POST_status = 1;							
+							break;
+					}
+				
+				// akteulle Uhrzeit als Zeitstempel
+				$time = time();
+				
+				// Eintragen in DB
+				$changeStatus = Database::getInstance()
+						->prepare('UPDATE tl_attendance SET attendance=?,tstamp=? WHERE m_id=? AND e_id=?')
+						->execute($POST_status,$time,$POST_m_id,$POST_e_id);			
+			}
+		
+		 
+		
+		
+
+		
 		 
 		/**
 		 * Eingeloggten Nutzer Laden

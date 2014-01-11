@@ -39,6 +39,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['attendance_list'] =
 		{title_legend},name,headline,type;
 		{attendance_calender_legend},al_pickCalendar;
 		{attendance_show_legend},al_expiredEvents,al_expireTime;
+		{attendance_statusOptions_legend},al_disableThird;
 		{attendance_memberRoles_legend},al_roleAdvice;
 		{attendance_style_legend},al_iconSet,al_useCSS;
 		';		
@@ -101,6 +102,21 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['al_expireTime'] = array
 			'tl_class'		=> 'w50'
 		)
 );
+
+
+// Dritte Option de/aktivieren
+$GLOBALS['TL_DCA']['tl_module']['fields']['al_disableThird'] = array
+(
+	'label'				=> &$GLOBALS['TL_LANG']['tl_module']['al_disableThird'],
+	'exclude'       	=> true,
+	'inputType'     	=> 'checkbox',	
+	'sql'           	=> "varchar(1) NOT NULL default ''",
+	'eval'				=> array 
+		(
+			'tl_class'		=> 'w50 m12'
+		)	
+);
+
 
 // Hinweisfeld auf Mitgliedereinstellungen (Admin, Trainer, inaktiv)
 $GLOBALS['TL_DCA']['tl_module']['fields']['al_roleAdvice'] = array
