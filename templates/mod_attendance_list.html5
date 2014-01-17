@@ -45,4 +45,7 @@
 			</tr>
 		</tbody>
 	</table>
+	<p class="error">
+		<?php echo $this->noUser;?>
+	</p>
 </div>

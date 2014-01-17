@@ -31,6 +31,9 @@ $GLOBALS['TL_LANG']['tl_module']['al_expireTime'][1] = 'Set a locking time (in h
 $GLOBALS['TL_LANG']['tl_module']['al_disableThird'][0] = 'Disable third option';
 $GLOBALS['TL_LANG']['tl_module']['al_disableThird'][1] = 'Third status option "later" will be disabled/enabled.';
 
+$GLOBALS['TL_LANG']['tl_module']['al_defaultStatus'][0] = 'Default status';
+$GLOBALS['TL_LANG']['tl_module']['al_defaultStatus'][1] = 'This status will be used for new fields.';
+
 $GLOBALS['TL_LANG']['tl_module']['al_roleAdvice'][0] = ' ';
 $GLOBALS['TL_LANG']['tl_module']['al_roleAdvice'][1] = 'Tip: Member roles can be managed in the member settings.';
 
@@ -45,3 +48,9 @@ $GLOBALS['TL_LANG']['tl_module']['flat_thick'] = 'Flat-Design, thick';
 $GLOBALS['TL_LANG']['tl_module']['flat_thick_alternative'] = 'Flat-Design, thick alternative';
 $GLOBALS['TL_LANG']['tl_module']['flat_thin'] = 'Flat-Design thin';
 
+
+// options for radio buttons (default status)
+$GLOBALS['TL_LANG']['tl_module']['al_radio']['0'] = 'unknown';
+$GLOBALS['TL_LANG']['tl_module']['al_radio']['1'] = 'attending';
+$GLOBALS['TL_LANG']['tl_module']['al_radio']['2'] = 'absent';
+$GLOBALS['TL_LANG']['tl_module']['al_radio']['3'] = 'later';

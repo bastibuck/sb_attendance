@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['attendance_list'] =
 		{title_legend},name,headline,type;
 		{attendance_calender_legend},al_pickCalendar;
 		{attendance_show_legend},al_expiredEvents,al_expireTime;
-		{attendance_statusOptions_legend},al_disableThird;
+		{attendance_statusOptions_legend},al_defaultStatus,al_disableThird;
 		{attendance_memberRoles_legend},al_roleAdvice;
 		{attendance_style_legend},al_iconSet,al_useCSS;
 		';		
@@ -64,6 +64,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['al_pickCalendar'] = array
 			'multiple'		=> true
 		)	
 );
+
+
 
 // Ausgewählte Kalender, Feld wird nicht ausgegeben, nur aus al_pickCalendar befüllt
 $GLOBALS['TL_DCA']['tl_module']['fields']['al_cals'] = array
@@ -115,6 +117,25 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['al_disableThird'] = array
 		(
 			'tl_class'		=> 'w50 m12'
 		)	
+);
+
+
+ 
+// Standard-Status
+$GLOBALS['TL_DCA']['tl_module']['fields']['al_defaultStatus'] = array 
+(
+	'label'				=> &$GLOBALS['TL_LANG']['tl_module']['al_defaultStatus'],
+	'inputType'         => 'radio',	
+	'sql'           	=> "varchar(1) NOT NULL default '0'",
+	'options'           => array('0', '1', '2', '3'),
+	'reference'         => &$GLOBALS['TL_LANG']['tl_module']['al_radio'],
+	'explanation'		=> 'al_defaultStatus',
+	'eval'				=> array 
+		(				
+			'helpwizard'		=> true,
+			'tl_class'		=> 'm12 w50 clr'
+		),
+	
 );
 
 
@@ -242,6 +263,15 @@ class tl_attendanceModule extends tl_module
 					$objData = $this->Database->prepare("INSERT IGNORE INTO tl_attendance %s")->set($arrNewData)->execute();
 				}			
 			}
+			
+			// standard Status setzen für alle Felder, die noch nicht geändert wurden (tstamp=0)			
+			$defaultStatus = $this->Input->post('al_defaultStatus');
+			
+			$changeStatus = Database::getInstance()
+					->prepare('UPDATE tl_attendance SET attendance=? WHERE tstamp=? ')
+					->execute($defaultStatus,0);	
+			
+			
 		}					
 	}	
 }

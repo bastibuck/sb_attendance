@@ -23,6 +23,8 @@ $GLOBALS['TL_LANG']['al_frontend']['later'] = 'Komme später';
 $GLOBALS['TL_LANG']['al_frontend']['time'] = ' Uhr';
 $GLOBALS['TL_LANG']['al_frontend']['attendants'] = 'Spieler';
 
+$GLOBALS['TL_LANG']['al_frontend']['noUser'] = 'kein Mitglied eingeloggt. <br>Statusänderungen sind nur nach einem erfolgreichen Login möglich.';
+
 /**
  * Member roles
  */
