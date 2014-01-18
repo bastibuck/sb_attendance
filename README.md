@@ -3,6 +3,8 @@
 
 sb_attandance allowes you to manage attandance of members for calendar events
 
+##### Please create new issues for feature you would like to be implemented as well as bugs you find. Thanks
+
 ![ScreenShot](sb_attendance.jpg)
 #####It's my first contao extension, so please, help me by giving lots of feedback.
 
