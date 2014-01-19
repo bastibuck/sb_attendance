@@ -46,6 +46,12 @@
 		</tbody>
 	</table>
 	<p class="error">
+		<?php echo $this->test;?>
+	</p>
+	
+	
+	<p class="error">
 		<?php echo $this->noUser;?>
 	</p>
+	
 </div>

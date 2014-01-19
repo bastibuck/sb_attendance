@@ -29,3 +29,6 @@ $GLOBALS['TL_LANG']['tl_member']['al_coachRole'][1] = 'Dieses Mitglied erhält m
 $GLOBALS['TL_LANG']['tl_member']['al_adminRole'][0] = 'Administratorenrolle zuweisen';
 $GLOBALS['TL_LANG']['tl_member']['al_adminRole'][1] = 'Dieses Mitglied erhält mehr Rechte in der Anwesenheitsliste.';
 
+$GLOBALS['TL_LANG']['tl_member']['al_Captain'][0] = 'Kapitänsrolle zuweisen';
+$GLOBALS['TL_LANG']['tl_member']['al_Captain'][1] = 'Dieses Mitglied ist Kapitän des Teams.';
+

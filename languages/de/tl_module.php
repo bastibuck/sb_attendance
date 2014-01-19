@@ -42,6 +42,9 @@ $GLOBALS['TL_LANG']['tl_module']['al_defaultStatus'][1] = 'Dieser Status wird f�
 $GLOBALS['TL_LANG']['tl_module']['al_roleAdvice'][0] = ' ';
 $GLOBALS['TL_LANG']['tl_module']['al_roleAdvice'][1] = 'Hinweis: Die Vergabe von Mitgliederrollen kann in der Mitgliederverwaltung vorgenommen werden.';
 
+$GLOBALS['TL_LANG']['tl_module']['al_name'][0] = 'Darstellung des Namen';
+$GLOBALS['TL_LANG']['tl_module']['al_name'][1] = 'Wie soll der Name eines Mitgliedes angezeigt werden?';
+
 $GLOBALS['TL_LANG']['tl_module']['al_iconSet'][0] = 'Icon-Set';
 $GLOBALS['TL_LANG']['tl_module']['al_iconSet'][1] = 'Hier können Sie das verwendete Icon-Set auswählen.';
 
@@ -58,3 +61,9 @@ $GLOBALS['TL_LANG']['tl_module']['al_radio']['0'] = 'Unbekannt';
 $GLOBALS['TL_LANG']['tl_module']['al_radio']['1'] = 'Anwesend';
 $GLOBALS['TL_LANG']['tl_module']['al_radio']['2'] = 'Abwesend';
 $GLOBALS['TL_LANG']['tl_module']['al_radio']['3'] = 'Komme später';
+
+// Optionen der Darstellung des Namen
+$GLOBALS['TL_LANG']['tl_module']['al_name']['username'] = 'Nutzername';
+$GLOBALS['TL_LANG']['tl_module']['al_name']['firstname'] = 'Vorname';
+$GLOBALS['TL_LANG']['tl_module']['al_name']['lastname'] = 'Nachname';
+$GLOBALS['TL_LANG']['tl_module']['al_name']['first_last'] = 'Vor- und Nachname';

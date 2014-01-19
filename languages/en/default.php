@@ -30,6 +30,7 @@ $GLOBALS['TL_LANG']['al_frontend']['noUser'] = 'No member is logged in.<br>Chang
  * Member roles
  */
 $GLOBALS['TL_LANG']['al_frontend']['coach'] = 'Coach';
+$GLOBALS['TL_LANG']['al_frontend']['captain'] = 'Captain';
 
 
 

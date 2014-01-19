@@ -35,48 +35,110 @@ class ModuleAttendanceList extends \Module
 	protected function compile()
 	{	
 		
+		$moduleID = $this->id;
 		
 		/**
 		 * Daten aus Datenbank laden
 		 */
 		 
+			// Namendarstellung laden
+			$result = Database::getInstance()
+				->prepare('SELECT al_name FROM tl_module WHERE id=?')
+				->limit(1)->execute($moduleID);		
+			$strNameSetting = $result->al_name;
+			
+			if ($strNameSetting=="first_last")
+			{
+				// String für DB Abfrage anpassen, wenn Vor- und Nachname ausgegeben werden sollen
+				$strNameSetting = "firstname, t1.lastname";
+				$intFirst_Last = 1;
+			}			
+			
 			// aktive SpielerIDs aus tl_attendance holen		
-			$result = Database::getInstance()->prepare('SELECT DISTINCT t1.username, t1.id FROM tl_member t1 JOIN tl_attendance t2 ON (t2.m_id = t1.id) ORDER BY t1.username')->execute();	
+			$result = Database::getInstance()
+				->prepare('
+					SELECT DISTINCT t1.'.$strNameSetting.', t1.id 
+					FROM tl_member t1 
+					JOIN tl_attendance t2 
+					ON (t2.m_id = t1.id) 
+					ORDER BY t1.username')
+				->execute();	
 			$arraySpieler = $result->fetchAllAssoc();
 
 			// aktive TerminIDs aus tl_attendance holen
-			$result = Database::getInstance()->prepare('SELECT DISTINCT t1.id,t1.title,t1.startDate,t1.startTime FROM tl_calendar_events t1 JOIN tl_attendance t2 ON (t2.e_id = t1.id) ORDER BY t1.startTime')->execute();		
+			$result = Database::getInstance()
+				->prepare('
+					SELECT DISTINCT t1.id,t1.title,t1.startDate,t1.startTime 
+					FROM tl_calendar_events t1 
+					JOIN tl_attendance t2 
+					ON (t2.e_id = t1.id) 
+					ORDER BY t1.startTime')
+				->execute();		
 			$arrayTermine = $result->fetchAllAssoc();
 
 			// ausgewähltes IconSet laden
-			$result = Database::getInstance()->prepare('SELECT al_iconSet FROM tl_module WHERE type=?')->limit(1)->execute(attendance_list);		
+			$result = Database::getInstance()
+				->prepare('SELECT al_iconSet FROM tl_module WHERE id=?')
+				->limit(1)->execute($moduleID);		
 			$iconSetPath = $result->al_iconSet;		
 			$iconSetPath = $iconSetPath .'_icon_set';
 
 			// optionales CSS - Daten laden
-			$result = Database::getInstance()->prepare('SELECT al_useCSS FROM tl_module WHERE type=?')->limit(1)->execute(attendance_list);
+			$result = Database::getInstance()
+				->prepare('SELECT al_useCSS FROM tl_module WHERE id=?')
+				->execute($moduleID);
 			$useCSS = $result->al_useCSS;
 			
 			// dritte Option-Status laden
-			$result = Database::getInstance()->prepare('SELECT al_disableThird FROM tl_module WHERE type=?')->limit(1)->execute(attendance_list);
+			$result = Database::getInstance()
+				->prepare('SELECT al_disableThird FROM tl_module WHERE id=?')
+				->execute($moduleID);
 			$flagDisableThird = $result->al_disableThird;
 			
 			// Trainer suchen
-			$result = Database::getInstance()->prepare('SELECT id FROM tl_member WHERE al_coachRole=?')->execute(1);		
+			$result = Database::getInstance()
+				->prepare('SELECT id FROM tl_member WHERE al_coachRole=?')
+				->execute(1);		
 			$intCoachID = $result->id;
 			
+			// Kapitän suchen
+			$result = Database::getInstance()
+				->prepare('SELECT id FROM tl_member WHERE al_Captain=?')
+				->execute(1);		
+			$intCaptainID = $result->id;			
+						
 			// Admin suchen
-			$result = Database::getInstance()->prepare('SELECT id FROM tl_member WHERE al_adminRole=?')->execute(1);		
+			$result = Database::getInstance()
+				->prepare('SELECT id FROM tl_member WHERE al_adminRole=?')
+				->execute(1);		
 			$intAdminID = $result->id;
 			
 			// Sperrzeit laden
-			$result = Database::getInstance()->prepare('SELECT al_expireTime FROM tl_module WHERE type=?')->limit(1)->execute(attendance_list);		
+			$result = Database::getInstance()
+				->prepare('SELECT al_expireTime FROM tl_module WHERE id=?')
+				->execute($moduleID);		
 			$expireTime = $result->al_expireTime;
 			$expireTime = $expireTime * 3600;
 			
 			// Anzahl abgelaufener Termine
-			$result = Database::getInstance()->prepare('SELECT al_expiredEvents FROM tl_module WHERE type=?')->limit(1)->execute(attendance_list);		
+			$result = Database::getInstance()
+				->prepare('SELECT al_expiredEvents FROM tl_module WHERE id=?')
+				->execute($moduleID);		
 			$intExpiredEvents = $result->al_expiredEvents;
+			
+			$test = "<h3>Einstellungen</h3><ul>";
+			$test .= "<li>Modul-ID: ".$moduleID."</li>";
+			$test .= "<li>Namen: ".$strNameSetting."</li>";
+			$test .= "<li>Iconset: ".$iconSetPath."</li>";
+			$test .= "<li>CSS: ".$useCSS."</li>";
+			$test .= "<li>dritte Option: ".$flagDisableThird."</li>";
+			$test .= "<li>Ablaufzeit: ".$expireTime."</li>";
+			$test .= "<li>Abgelaufene: ".$intExpiredEvents."</li>";
+			$test .= "<li>Standardstatus: ".$this->al_defaultStatus."</li>";
+			$test .= "<li>Kalender: ".$this->al_cals."</li>";
+			
+			//$this->Template->test = $test;
+			
 			
 		/**
 		 * ENDE: Daten aus Datenbank laden
@@ -278,7 +340,14 @@ class ModuleAttendanceList extends \Module
 			foreach ($arraySpieler as $reihe)
 			{				
 				// Variablen definieren 
-				$name = $reihe['username'];
+				if ($intFirst_Last==1)
+				{
+					$name = $reihe['firstname'] . " " . $reihe['lastname'];
+				}
+				else
+				{
+					$name = $reihe[''.$strNameSetting.''];
+				}
 				$stati = array ();
 				
 				$i=1;
@@ -548,6 +617,12 @@ class ModuleAttendanceList extends \Module
 				if($intCoachID==$reihe['id'])
 				{
 					$name = $name." <i>(".$GLOBALS['TL_LANG']['al_frontend']['coach'].")</i>";
+				}
+				
+				// Kapitänsrolle Hinweis hinzufügen
+				if($intCaptainID==$reihe['id'])
+				{
+					$name = $name." <i>(".$GLOBALS['TL_LANG']['al_frontend']['captain'].")</i>";
 				}
 				
 				// Zeilenbeginn abhängig vom eingeloggten Nutzer erstellen

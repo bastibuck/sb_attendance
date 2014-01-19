@@ -65,6 +65,11 @@ $GLOBALS['TL_DCA']['tl_attendance'] = array
 		'attendance' => array
 		(
 			'sql'                     => "char(1) NOT NULL default '0'"
-		)		
+		),
+		// Modul-ID um mehrere Listen zu ermöglichen
+		'module_id' => array
+		(
+			'sql'                     => "int(10) unsigned NOT NULL"
+		)	
 	)
 );

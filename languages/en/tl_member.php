@@ -25,3 +25,5 @@ $GLOBALS['TL_LANG']['tl_member']['al_coachRole'][1] = 'This member will be grant
 $GLOBALS['TL_LANG']['tl_member']['al_adminRole'][0] = 'Assign admin role';
 $GLOBALS['TL_LANG']['tl_member']['al_adminRole'][1] = 'This member will be granted more rights.';
 
+$GLOBALS['TL_LANG']['tl_member']['al_Captain'][0] = 'Team captain';
+$GLOBALS['TL_LANG']['tl_member']['al_Captain'][1] = 'This member is the team\'s captain.';

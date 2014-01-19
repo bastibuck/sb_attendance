@@ -57,7 +57,7 @@ $GLOBALS['TL_DCA']['tl_member']['list']['operations']['toggle']['button_callback
 $GLOBALS['TL_DCA']['tl_member']['palettes']['default'] =
 	str_replace(
 		';{account_legend},disable,start,stop',
-		';{attendance_settings_legend},al_inactiveMember,al_coachRole,al_adminRole;{account_legend},disable,start,stop',
+		';{attendance_settings_legend},al_Captain,al_coachRole,al_adminRole,al_inactiveMember;{account_legend},disable,start,stop',
 		$GLOBALS['TL_DCA']['tl_member']['palettes']['default']
 	);
 	
@@ -68,6 +68,20 @@ $GLOBALS['TL_DCA']['tl_member']['palettes']['default'] =
  * Zusätzliche Felder für tl_member definieren, Contao erzeugt diese dann automatisch über ein SQL Statement
  * "al_" als Prefix für "Attendance_List", um einzigartige Namen zu erstellen
  */	
+
+
+// Checkbox, um ein Mitglied als Kapitän zu markieren
+$GLOBALS['TL_DCA']['tl_member']['fields']['al_Captain'] = array
+(
+	'label'				=> &$GLOBALS['TL_LANG']['tl_member']['al_Captain'],
+	'exclude'       	=> true,
+	'inputType'         => 'checkbox',
+	'sql'           	=> "char(1) NOT NULL",
+	'eval'				=> array 
+		(				
+			'unique'		=> true
+		)
+); 
  
 // Checkbox, um ein Mitglied inaktiv zu setzen
 $GLOBALS['TL_DCA']['tl_member']['fields']['al_inactiveMember'] = array
@@ -75,11 +89,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['al_inactiveMember'] = array
 	'label'				=> &$GLOBALS['TL_LANG']['tl_member']['al_inactiveMember'],
 	'exclude'       	=> true,
 	'inputType'         => 'checkbox',
-	'sql'           	=> "char(1) NOT NULL",
-	'eval'				=> array 
-		(			
-			'tl_class'		=> 'm12 clr'
-		)
+	'sql'           	=> "char(1) NOT NULL"
 ); 
 
 // Checkbox, um ein Mitglied als Trainer zu setzen
@@ -90,8 +100,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['al_coachRole'] = array
 	'inputType'         => 'checkbox',
 	'sql'           	=> "varchar(1) NOT NULL",
 	'eval'				=> array 
-		(			
-			'tl_class'		=> 'w50 m12',
+		(				
 			'unique'		=> true
 		)
 );
@@ -102,11 +111,7 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['al_adminRole'] = array
 	'label'				=> &$GLOBALS['TL_LANG']['tl_member']['al_adminRole'],
 	'exclude'       	=> true,
 	'inputType'         => 'checkbox',
-	'sql'           	=> "char(1) NOT NULL",
-	'eval'				=> array 
-		(			
-			'tl_class'		=> 'w50 m12'
-		)
+	'sql'           	=> "char(1) NOT NULL"
 );
 
 

@@ -29,6 +29,7 @@ $GLOBALS['TL_LANG']['al_frontend']['noUser'] = 'kein Mitglied eingeloggt. <br>St
  * Member roles
  */
 $GLOBALS['TL_LANG']['al_frontend']['coach'] = 'Trainer';
+$GLOBALS['TL_LANG']['al_frontend']['captain'] = 'Kapitän';
 
 
 

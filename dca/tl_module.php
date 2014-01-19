@@ -41,7 +41,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['attendance_list'] =
 		{attendance_show_legend},al_expiredEvents,al_expireTime;
 		{attendance_statusOptions_legend},al_defaultStatus,al_disableThird;
 		{attendance_memberRoles_legend},al_roleAdvice;
-		{attendance_style_legend},al_iconSet,al_useCSS;
+		{attendance_style_legend},al_name,al_iconSet,al_useCSS;
 		';		
 	
 /**
@@ -153,6 +153,17 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['al_roleAdvice'] = array
 		)
 );
  
+// Darstellung des Namen
+$GLOBALS['TL_DCA']['tl_module']['fields']['al_name'] = array 
+(
+	'label'				=> &$GLOBALS['TL_LANG']['tl_module']['al_name'],
+	'inputType'         => 'radio',	
+	'sql'           	=> "varchar(10) NOT NULL default 'username'",
+	'options'           => array('username', 'firstname', 'lastname', 'first_last'),
+	'reference'         => &$GLOBALS['TL_LANG']['tl_module']['al_name']	
+);
+
+ 
 // Icon-Set-Auswahl
 $GLOBALS['TL_DCA']['tl_module']['fields']['al_iconSet'] = array
 (
@@ -177,6 +188,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['al_useCSS'] = array
 			'tl_class'		=> 'w50 m12'
 		)	
 );
+ 
 
 
 
