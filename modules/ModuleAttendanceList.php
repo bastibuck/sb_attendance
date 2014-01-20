@@ -140,6 +140,7 @@ class ModuleAttendanceList extends \Module
 			//$this->Template->test = $test;
 			
 			
+			
 		/**
 		 * ENDE: Daten aus Datenbank laden
 		 */	
@@ -389,7 +390,7 @@ class ModuleAttendanceList extends \Module
 										break;
 									case 1:
 										$att = 
-											'<td class="expired"><form action="" method="POST">
+											'<td class="expired"><form action="'.Environment::get('requestUri').'" method="POST">
 												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 												<input 
 													type="image" 
@@ -406,7 +407,7 @@ class ModuleAttendanceList extends \Module
 										break;
 									case 2:
 										$att = 
-											'<td class="expired"><form action="" method="POST">
+											'<td class="expired"><form action="'.Environment::get('requestUri').'" method="POST">
 												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 												<input 
 													type="image" 
@@ -423,7 +424,7 @@ class ModuleAttendanceList extends \Module
 										break;
 									case 3:
 										$att = 
-											'<td class="expired"><form action="" method="POST">
+											'<td class="expired"><form action="'.Environment::get('requestUri').'" method="POST">
 												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 												<input 
 													type="image" 
@@ -502,7 +503,7 @@ class ModuleAttendanceList extends \Module
 								{
 									case 0:
 										$att = 
-											'<td><form action="" method="POST">
+											'<td><form action="'.Environment::get('requestUri').'" method="POST">
 												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 												<input 
 													type="image" 
@@ -517,7 +518,7 @@ class ModuleAttendanceList extends \Module
 										break;
 									case 1:
 										$att = 
-											'<td><form action="" method="POST">
+											'<td><form action="'.Environment::get('requestUri').'" method="POST">
 												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 												<input 
 													type="image" 
@@ -534,7 +535,7 @@ class ModuleAttendanceList extends \Module
 										break;
 									case 2:
 										$att = 
-											'<td><form action="" method="POST">
+											'<td><form action="'.Environment::get('requestUri').'" method="POST">
 												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 												<input 
 													type="image" 
@@ -551,7 +552,7 @@ class ModuleAttendanceList extends \Module
 										break;
 									case 3:
 										$att = 
-											'<td><form action="" method="POST">
+											'<td><form action="'.Environment::get('requestUri').'" method="POST">
 												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
 												<input 
 													type="image" 
