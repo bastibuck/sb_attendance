@@ -51,8 +51,14 @@ class ModuleAttendanceList extends \Module
 			{
 				// String für DB Abfrage anpassen, wenn Vor- und Nachname ausgegeben werden sollen
 				$strNameSetting = "firstname, t1.lastname";
+				$strNameSort = "t1.firstname, t1.lastname";
 				$intFirst_Last = 1;
-			}			
+			}
+			else
+			{
+				$strNameSort = $strNameSetting;
+			}
+			
 			
 			// aktive SpielerIDs aus tl_attendance holen		
 			$result = Database::getInstance()
@@ -61,7 +67,7 @@ class ModuleAttendanceList extends \Module
 					FROM tl_member t1 
 					JOIN tl_attendance t2 
 					ON (t2.m_id = t1.id) 
-					ORDER BY t1.username')
+					ORDER BY '.$strNameSort.'')
 				->execute();	
 			$arraySpieler = $result->fetchAllAssoc();
 
