@@ -40,12 +40,25 @@
 	border: 0px;
 }
 
+/* Expired fields */
+
+.mod_attendance_list td.expired
+{
+	background: #bbb;
+}
+
 /* User definitons  */
 
 .mod_attendance_list tr.logged_user
 {
 	border-top: 1px dashed #f00;
 	border-bottom: 1px dashed #f00;
+	background-color: #fbb;
+}
+
+.mod_attendance_list tr.logged_user td.expired
+{	
+	background-color: #d58f8f;
 }
 
 .mod_attendance_list tr.coach
@@ -76,11 +89,4 @@
 {
 	min-height: 35px;
 	margin-bottom: 10px;	
-}
-
-/* Expired fields */
-
-.mod_attendance_list td.expired
-{
-	background: #bbb;
 }

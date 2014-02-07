@@ -3,21 +3,12 @@
 /**
  * Contao Open Source CMS
  *
- * Copyright (c) 2005-2013 Leo Feyer
+ * Copyright (c) 2005-2014 Leo Feyer
  *
  * @package Sb_attendance
  * @link    https://contao.org
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  */
-
-
-/**
- * Register the namespaces
- */
-ClassLoader::addNamespaces(array
-(
-	'Attendance',
-));
 
 
 /**
@@ -27,7 +18,7 @@ ClassLoader::addClasses(array
 (
 	'AttendanceHooks'            => 'system/modules/sb_attendance/AttendanceHooks.php',
 	// Models
-	'Attendance\AttendanceModel' => 'system/modules/sb_attendance/models/AttendanceModel.php',
+	'sb_attendanceSettingsModel' => 'system/modules/sb_attendance/models/sb_attendanceSettingsModel.php',
 
 	// Modules
 	'ModuleAttendanceList'       => 'system/modules/sb_attendance/modules/ModuleAttendanceList.php',
