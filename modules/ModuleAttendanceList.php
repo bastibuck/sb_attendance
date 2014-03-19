@@ -28,13 +28,81 @@ class ModuleAttendanceList extends \Module
 	 *
 	 */
 	protected $strTemplate = 'mod_attendance_list';
+	
+	
+	// Funktion, um die einzelnen Status Felder zu erzeugen, abhängig von den Nutzerrechten und Ablaufstatus eines Termins
+	private function createStatusField($att, $intReiheID, $intTerminID, $flagExpired, $flagEdit, $iconSetPath, $name, $tstamp)
+	{		
+		$attendanceName = array('unknown', 'yes', 'no', 'later');
+		
+		// Änderungszeitpunkt zusammensetzen
+		if ($tstamp!=0)
+		{		
+			$timeChanged = " (";
+			$timeChanged .= date($GLOBALS['TL_CONFIG']['datimFormat'],$tstamp);			
+			$timeChanged .= $GLOBALS['TL_LANG']['al_frontend']['time'];
+			$timeChanged .= ")";
+		}
+		else
+		{
+			$timeChanged='';
+		}
+		
+		// Alt- und Title-Attribut Wert zusammensetzen
+		$strAltTitleTag = $name;
+		$strAltTitleTag .= ": ";
+		$strAltTitleTag .= $GLOBALS['TL_LANG']['al_frontend'][$attendanceName[$att]];
+		$strAltTitleTag.= $timeChanged;
+		
+		
+		// Feld aufbauen
+		$strStatusField = "<td";
+			// abgelaufene Termine kennzeichnen
+			if ($flagExpired)
+				{
+					$strStatusField .= " class='expired'";
+					$strExpired = "_expired";
+				}
+			
+			// Bearbeitbare Felder erzeugen
+			if($flagEdit)
+			{
+				$strStatusField .= "><form action='".Environment::get('requestUri')."' method='POST'>
+										<input type='hidden' name='REQUEST_TOKEN' value='{{request_token}}'>
+										<input 
+											type='image' 
+											src='system/modules/sb_attendance/assets/img/".$iconSetPath."/".$attendanceName[$att].$strExpired.".png'
+											alt='".$strAltTitleTag."'
+											title='".$strAltTitleTag."'
+										>
+										<input type='hidden' value='".$att."' name='status'>											
+										<input type='hidden' value='".$intReiheID."' name='m_id'>
+										<input type='hidden' value='".$intTerminID."' name='e_id'>
+									</form></td>";			
+			}
+			// nicht bearbeitbare Felder erzeugen
+			else
+			{
+				$strStatusField .= "><img
+											src='system/modules/sb_attendance/assets/img/".$iconSetPath."/".$attendanceName[$att].$strExpired.".png'
+											alt='".$strAltTitleTag."'
+											title='".$strAltTitleTag."'
+										>
+									</td>";	
+			}
+			
+		// Statusfeld zurückgeben
+		return $strStatusField;
+	}
 
+	
+	
 	/**
 	 * Generate the module
 	 */
 	protected function compile()
 	{	
-		
+		// Modul-ID laden
 		$moduleID = $this->id;
 		
 		/**
@@ -42,10 +110,28 @@ class ModuleAttendanceList extends \Module
 		 */
 		 
 			// Namendarstellung laden
-			$result = Database::getInstance()
-				->prepare('SELECT al_name FROM tl_module WHERE id=?')
-				->limit(1)->execute($moduleID);		
-			$strNameSetting = $result->al_name;
+			$strNameSetting = \sb_attendanceSettingsModel::findSettings($moduleID, 'al_name');			
+			
+			// ausgewähltes IconSet laden
+			$iconSetPath = \sb_attendanceSettingsModel::findSettings($moduleID, 'al_iconSet');
+			$iconSetPath = $iconSetPath .'_icon_set';
+			
+			// optionales CSS - Daten laden			
+			$useCSS = \sb_attendanceSettingsModel::findSettings($moduleID, 'al_useCSS');
+			
+			
+			// dritte Option-Status laden
+			$flagDisableThird = \sb_attendanceSettingsModel::findSettings($moduleID, 'al_disableThird');
+			
+			// Anzahl abgelaufener Termine
+			$intExpiredEvents = \sb_attendanceSettingsModel::findSettings($moduleID, 'al_expiredEvents');		
+			
+			// Sperrzeit laden
+			$expireTime = \sb_attendanceSettingsModel::findSettings($moduleID, 'al_expireTime');					
+			$expireTime = $expireTime * 3600;
+			
+			
+			
 			
 			if ($strNameSetting=="first_last")
 			{
@@ -80,32 +166,14 @@ class ModuleAttendanceList extends \Module
 					ON (t2.e_id = t1.id) 
 					ORDER BY t1.startTime')
 				->execute();		
-			$arrayTermine = $result->fetchAllAssoc();
-
-			// ausgewähltes IconSet laden
-			$result = Database::getInstance()
-				->prepare('SELECT al_iconSet FROM tl_module WHERE id=?')
-				->limit(1)->execute($moduleID);		
-			$iconSetPath = $result->al_iconSet;		
-			$iconSetPath = $iconSetPath .'_icon_set';
-
-			// optionales CSS - Daten laden
-			$result = Database::getInstance()
-				->prepare('SELECT al_useCSS FROM tl_module WHERE id=?')
-				->execute($moduleID);
-			$useCSS = $result->al_useCSS;
+			$arrayTermine = $result->fetchAllAssoc();				
 			
-			// dritte Option-Status laden
-			$result = Database::getInstance()
-				->prepare('SELECT al_disableThird FROM tl_module WHERE id=?')
-				->execute($moduleID);
-			$flagDisableThird = $result->al_disableThird;
 			
-			// Trainer suchen
+			// Trainer suchen			
 			$result = Database::getInstance()
 				->prepare('SELECT id FROM tl_member WHERE al_coachRole=?')
 				->execute(1);		
-			$intCoachID = $result->id;
+			$intCoachID = $result->id;	
 			
 			// Kapitän suchen
 			$result = Database::getInstance()
@@ -117,20 +185,8 @@ class ModuleAttendanceList extends \Module
 			$result = Database::getInstance()
 				->prepare('SELECT id FROM tl_member WHERE al_adminRole=?')
 				->execute(1);		
-			$intAdminID = $result->id;
+			$intAdminID = $result->id;		
 			
-			// Sperrzeit laden
-			$result = Database::getInstance()
-				->prepare('SELECT al_expireTime FROM tl_module WHERE id=?')
-				->execute($moduleID);		
-			$expireTime = $result->al_expireTime;
-			$expireTime = $expireTime * 3600;
-			
-			// Anzahl abgelaufener Termine
-			$result = Database::getInstance()
-				->prepare('SELECT al_expiredEvents FROM tl_module WHERE id=?')
-				->execute($moduleID);		
-			$intExpiredEvents = $result->al_expiredEvents;
 			
 			$test = "<h3>Einstellungen</h3><ul>";
 			$test .= "<li>Modul-ID: ".$moduleID."</li>";
@@ -163,43 +219,46 @@ class ModuleAttendanceList extends \Module
 				$int_POST_eventID = $this->Input->post('e_id');
 				$int_POST_status = $this->Input->post('status');
 				
-				// Statusänderung
-				switch ($int_POST_status) 
-					{
-						case 0:
-							$int_POST_status = 1;							
-							break;
-						case 1:
-							$int_POST_status = 2;							
-							break;
-						case 2:
-							// Wenn 'Dritte Option deaktivieren' gesetzt wurde, direkt wieder Status 1 setzen
-							if ($flagDisableThird==1)
-							{
-								$int_POST_status = 1;
-							}
-							else
-							{
-								$int_POST_status = 3;
-							}
-							break;
-						case 3:
-							$int_POST_status = 1;							
-							break;
-					}
-				
-				// akteulle Uhrzeit als Zeitstempel
-				$time = time();
-				
-				// Eintragen in DB
-				$changeStatus = Database::getInstance()
-						->prepare('UPDATE tl_attendance SET attendance=?,tstamp=? WHERE m_id=? AND e_id=?')
-						->execute($int_POST_status,$time,$int_POST_memberID,$int_POST_eventID);			
-			}
-		
-		 
-
-		
+				$oldStatus = Database::getInstance()
+						->prepare('SELECT attendance FROM tl_attendance WHERE m_id=? AND e_id=?')
+						->execute($int_POST_memberID,$int_POST_eventID);
+						
+				if($oldStatus->attendance == $int_POST_status)
+				{
+					// Statusänderung
+					switch ($int_POST_status) 
+						{
+							case 0:
+								$int_POST_status = 1;							
+								break;
+							case 1:
+								$int_POST_status = 2;							
+								break;
+							case 2:
+								// Wenn 'Dritte Option deaktivieren' gesetzt wurde, direkt wieder Status 1 setzen
+								if ($flagDisableThird==1)
+								{
+									$int_POST_status = 1;
+								}
+								else
+								{
+									$int_POST_status = 3;
+								}
+								break;
+							case 3:
+								$int_POST_status = 1;							
+								break;
+						}
+					
+					// akteulle Uhrzeit als Zeitstempel
+					$time = time();
+					
+					// Eintragen in DB
+					$changeStatus = Database::getInstance()
+							->prepare('UPDATE tl_attendance SET attendance=?,tstamp=? WHERE m_id=? AND e_id=?')
+							->execute($int_POST_status,$time,$int_POST_memberID,$int_POST_eventID);
+				}						
+			}		
 		 
 		/**
 		 * Eingeloggten Nutzer Laden
@@ -279,16 +338,16 @@ class ModuleAttendanceList extends \Module
 				// Überschriften-Array mit den Titeln der Events befüllen
 				foreach ($arrayTermine as $termin)
 				{					
-					// Abgelaufene Events 
-					if($i<=$intExpiredEvents)
+					// Abgelaufene Events
+					$strTitle = "<td";
+					if ($i<=$intExpiredEvents)
 					{
-						$termin['title'] = "<td class='expired'><p class='al_title'>".$termin['title']."</p>";
-					} 
-					else if($i>$intExpiredEvents)
-					{
-						$termin['title'] = "<td><p class='al_title'>".$termin['title']."</p>";
+						$strTitle .= " class='expired'";
 					}
-				
+					$strTitle .= "><p class='al_title'>".$termin['title']."</p>";					
+					$termin['title'] = $strTitle;
+					
+									
 					// Datumsformate berücksichtigen (Umwandeln in menschenlesbar)
 					if ($termin['startTime']!=$termin['startDate'])
 					{
@@ -350,333 +409,106 @@ class ModuleAttendanceList extends \Module
 				if ($intFirst_Last==1)
 				{
 					$name = $reihe['firstname'] . " " . $reihe['lastname'];
+					$strNameSetting = 'firstname';
 				}
 				else
 				{
 					$name = $reihe[''.$strNameSetting.''];
 				}
+				
 				$stati = array ();
 				
 				$i=1;
-				// abgelaufene Termine für Array aufbereiten und übergeben
+				// Termine durchlaufen
 				foreach ($arrayTermine as $termin)
 				{			
-					// Abgelaufene Events 
-					if($i<=$intExpiredEvents)
-					{
-						// $stati Datensatz erstellen
-						// Pro Termin den entsprechenden Anwesenheitsstatus laden 
-						$result = Database::getInstance()->prepare('SELECT attendance,tstamp FROM tl_attendance WHERE m_id=? AND e_id=?')->execute($reihe['id'],$termin['id']);	
-						$attendances = $result->fetchAllAssoc();
-						
-						// attendance-Wert auslesen und entsprechenden Bildpfad auf Array speichern	
-						foreach ($attendances as $attendance)
+					// Pro Termin den entsprechenden Anwesenheitsstatus laden 
+					$result = Database::getInstance()->prepare('SELECT attendance,tstamp FROM tl_attendance WHERE m_id=? AND e_id=?')->execute($reihe['id'],$termin['id']);	
+					$attendances = $result->fetchAllAssoc();
+					
+					foreach ($attendances as $attendance)
 						{					
-							$att = $attendance['attendance'];						
+							$att = $attendance['attendance'];
+							
+							// Flag-Variablen false setzen und nur true setzen, wenn Rechte/Zeit es benötigen
+							$flagExpired = false;
+							$flagEdit = false;
 							
 							// Abhängig von Nutzerrolle die Felder editierbar machen oder nur als Bilder ausgeben
 							if($intLoggedUserID==$intCoachID || $intLoggedUserID==$intAdminID)
-							{						
-								switch ($att) 
+							{									
+								$flagEdit = true;
+								if ($i<=$intExpiredEvents)
 								{
-									case 0:
-										$att = 
-											'<td class="expired"><form action="" method="POST">
-												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
-												<input 
-													type="image" 
-													src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/unknown_expired.png"
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['unknown'].'" 
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['unknown'].'"
-												>
-												<input type="hidden" value="0" name="status">											
-												<input type="hidden" value="'.$reihe['id'].'" name="m_id">
-												<input type="hidden" value="'.$termin['id'].'" name="e_id">
-											</form></td>';
-										break;
-									case 1:
-										$att = 
-											'<td class="expired"><form action="'.Environment::get('requestUri').'" method="POST">
-												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
-												<input 
-													type="image" 
-													src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/yes_expired.png"
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['yes']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['yes']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-												>
-												<input type="hidden" value="1" name="status">
-												<input type="hidden" value="'.$reihe['id'].'" name="m_id">
-												<input type="hidden" value="'.$termin['id'].'" name="e_id">
-											</form></td>';
-										break;
-									case 2:
-										$att = 
-											'<td class="expired"><form action="'.Environment::get('requestUri').'" method="POST">
-												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
-												<input 
-													type="image" 
-													src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/no_expired.png"
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['no']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['no']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-												>
-												<input type="hidden" value="2" name="status">
-												<input type="hidden" value="'.$reihe['id'].'" name="m_id">
-												<input type="hidden" value="'.$termin['id'].'" name="e_id">
-											</form></td>';
-										break;
-									case 3:
-										$att = 
-											'<td class="expired"><form action="'.Environment::get('requestUri').'" method="POST">
-												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
-												<input 
-													type="image" 
-													src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/later_expired.png"
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['later']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['later']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-												>
-												<input type="hidden" value="3" name="status">
-												<input type="hidden" value="'.$reihe['id'].'" name="m_id">
-												<input type="hidden" value="'.$termin['id'].'" name="e_id">
-											</form></td>';
-										break;
-								}					
-							}						
-							else
+									$flagExpired = true; 
+								}										
+							}	
+							else if($intLoggedUserID==$reihe['id'])
 							{
-								switch ($att) 
+								if ($i<=$intExpiredEvents)
 								{
-									case 0:
-										$att = '<td class="expired"><img src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/unknown_expired.png" 
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['unknown'].'" 
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['unknown'].'"></td>';
-										break;
-									case 1:
-										$att = '<td class="expired"><img src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/yes_expired.png" 
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['yes']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['yes']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"></td>';
-										break;
-									case 2:
-										$att = '<td class="expired"><img src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/no_expired.png" 
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['no']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).' Uhr"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['no']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).' Uhr"></td>';
-										break;
-									case 3:
-										$att = '<td class="expired"><img src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/later_expired.png" 
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['later']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['later']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"></td>';
-										break;
-								}					
+									$flagExpired = true; 									
+								}
+								else 
+								{									
+									$flagEdit = true;
+								}
 							}
 							
+							else
+							{
+								if ($i<=$intExpiredEvents)
+								{
+									$flagExpired = true;
+								}								
+							}	
+							// Funktion aufrufen, die das entsprechende Feld zurückliefert
+							$att = $this->createStatusField($att, $reihe['id'], $termin['id'], $flagExpired, $flagEdit, $iconSetPath, $name, $attendance['tstamp']);
 								
 							array_push($stati, $att);
 						}
-						$i++;
-					}
-				}
-				
-				// kommende Termine für Array aufbereiten und übergeben
-				$i=1;
-				foreach ($arrayTermine as $termin)
-				{						
-					if($i>$intExpiredEvents)
-					{					
-						// Pro Termin den entsprechenden Anwesenheitsstatus laden 
-						$result = Database::getInstance()->prepare('SELECT attendance,tstamp FROM tl_attendance WHERE m_id=? AND e_id=?')->execute($reihe['id'],$termin['id']);	
-						$attendances = $result->fetchAllAssoc();
-						
-						// attendance-Wert auslesen und entsprechenden Bildpfad auf Array speichern	
-						foreach ($attendances as $attendance)
-						{					
-							$att = $attendance['attendance'];						
-							
-							// Abhängig von Nutzerrolle die Felder editierbar machen oder nur als Bilder ausgeben
-							if($intLoggedUserID==$reihe['id'] || $intLoggedUserID==$intCoachID || $intLoggedUserID==$intAdminID)
-							{						
-								switch ($att) 
-								{
-									case 0:
-										$att = 
-											'<td><form action="'.Environment::get('requestUri').'" method="POST">
-												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
-												<input 
-													type="image" 
-													src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/unknown.png"
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['unknown'].'" 
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['unknown'].'"
-												>
-												<input type="hidden" value="0" name="status">											
-												<input type="hidden" value="'.$reihe['id'].'" name="m_id">
-												<input type="hidden" value="'.$termin['id'].'" name="e_id">
-											</form></td>';
-										break;
-									case 1:
-										$att = 
-											'<td><form action="'.Environment::get('requestUri').'" method="POST">
-												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
-												<input 
-													type="image" 
-													src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/yes.png"
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['yes']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['yes']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-												>
-												<input type="hidden" value="1" name="status">
-												<input type="hidden" value="'.$reihe['id'].'" name="m_id">
-												<input type="hidden" value="'.$termin['id'].'" name="e_id">
-											</form></td>';
-										break;
-									case 2:
-										$att = 
-											'<td><form action="'.Environment::get('requestUri').'" method="POST">
-												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
-												<input 
-													type="image" 
-													src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/no.png"
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['no']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['no']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-												>
-												<input type="hidden" value="2" name="status">
-												<input type="hidden" value="'.$reihe['id'].'" name="m_id">
-												<input type="hidden" value="'.$termin['id'].'" name="e_id">
-											</form></td>';
-										break;
-									case 3:
-										$att = 
-											'<td><form action="'.Environment::get('requestUri').'" method="POST">
-												<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
-												<input 
-													type="image" 
-													src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/later.png"
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['later']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['later']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-												>
-												<input type="hidden" value="3" name="status">
-												<input type="hidden" value="'.$reihe['id'].'" name="m_id">
-												<input type="hidden" value="'.$termin['id'].'" name="e_id">
-											</form></td>';
-										break;
-								}					
-							}						
-							else
-							{
-								switch ($att) 
-								{
-									case 0:
-										$att = '<td><img src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/unknown.png" 
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['unknown'].'" 
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['unknown'].'"></td>';
-										break;
-									case 1:
-										$att = '<td><img src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/yes.png" 
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['yes']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['yes']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"></td>';
-										break;
-									case 2:
-										$att = '<td><img src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/no.png" 
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['no']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['no']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"></td>';
-										break;
-									case 3:
-										$att = '<td><img src="system/modules/sb_attendance/assets/img/'.$iconSetPath.'/later.png" 
-													alt="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['later']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"
-													title="'.ucfirst($reihe['username']).': '.$GLOBALS['TL_LANG']['al_frontend']['later']
-															.' - '.date($GLOBALS['TL_CONFIG']['datimFormat'],$attendance['tstamp']).$GLOBALS['TL_LANG']['al_frontend']['time'].'"></td>';
-										break;
-								}					
-							}	
-							array_push($stati, $att);
-						}
-					}
 					$i++;
-										
-				}
+				}				
 				
 				
-				// Bearbeiten der Daten vor der Übergabe (eingeloggten Nutzer hinzufügen, Username ersten buchstaben groß, 
+				// Bearbeiten der Daten vor der Übergabe (eingeloggten Nutzer hinzufügen
 				// gerade/ungerade Zeilen markieren
-				$row += 1;
-				$name = ucfirst($name);				
+				$row += 1;							
 				
 				// Trainerrolle Hinweis hinzufügen
 				if($intCoachID==$reihe['id'])
 				{
-					$name = $name." <i>(".$GLOBALS['TL_LANG']['al_frontend']['coach'].")</i>";
+					$name .= " <i>(".$GLOBALS['TL_LANG']['al_frontend']['coach'].")</i>";
 				}
 				
 				// Kapitänsrolle Hinweis hinzufügen
 				if($intCaptainID==$reihe['id'])
 				{
-					$name = $name." <i>(".$GLOBALS['TL_LANG']['al_frontend']['captain'].")</i>";
+					$name .= " <i>(".$GLOBALS['TL_LANG']['al_frontend']['captain'].")</i>";
 				}
 				
 				// Zeilenbeginn abhängig vom eingeloggten Nutzer erstellen
-				if(($intLoggedUserID==$reihe['id']) && ($intCoachID==$reihe['id']))
-				{		
-					if($row%2==1)
-					{
-						$name = "<tr class='odd logged_user coach'><td class='col_member'>".$name."</td>";
-					}
-					else
-					{
-						$name = "<tr class='even logged_user coach'><td class='col_member'>".$name."</td>";
-					}
+				if($row%2==1)
+				{
+					$strUserHTMLclass = "odd";
 				}
-				else if($intLoggedUserID==$reihe['id'])
-				{		
-					if($row%2==1)
-					{
-						$name = "<tr class='odd logged_user'><td class='col_member'>".$name."</td>";
-					}
-					else
-					{
-						$name = "<tr class='even logged_user'><td class='col_member'>".$name."</td>";
-					}
+				else
+				{
+					$strUserHTMLclass = "even";
 				}
-				else if ($intCoachID==$reihe['id'])
-				{							
-					if($row%2==1)
-					{
-						$name = "<tr class='odd coach'><td class='col_member'>".$name."</td>";
-					}
-					else
-					{
-						$name = "<tr class='even coach'><td class='col_member'>".$name."</td>";
-					}
+				
+				if($intLoggedUserID==$reihe['id'])
+				{
+					$strUserHTMLclass .= " logged_user";
 				}
-				else 
-				{							
-					if($row%2==1)
-					{
-						$name = "<tr class='odd'><td class='col_member'>".$name."</td>";
-					}
-					else
-					{
-						$name = "<tr class='even'><td class='col_member'>".$name."</td>";
-					}
+				
+				if($intCoachID==$reihe['id'])
+				{
+					$strUserHTMLclass .= " coach";
 				}
+				
+				$name = "<tr class='".$strUserHTMLclass."'><td class='col_member'>".$name."</td>";
+					
 				
 				// Daten-Array aufbauen
 				$dataArray[] = array(					
@@ -705,14 +537,5 @@ class ModuleAttendanceList extends \Module
 			
 			echo "<pre>"; print_r($dataArray); echo "</pre>"; 
 		*/
-	}
-	
-	
-	
+	}	
 }
-
-
-
-
-
-

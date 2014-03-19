@@ -1,31 +1,30 @@
 /**
  * CSS Attendance List Module
  *
- * @copyright  Sebastian Buck 2013
+ * @copyright  Sebastian Buck 2014
  * @author     Sebastian Buck
  * @package    Attendance
  */
-
  
 /* General definitons */
 
-.mod_attendance_list table
+.ce_attendance_list_viewer table
 {
 	border-spacing: 0;
 	border-collapse: collapse;
 }
 
-.mod_attendance_list tbody tr
+.ce_attendance_list_viewer tbody tr
 {
 	border-top: 1px dashed #ccc;
 }
 
-.mod_attendance_list tr.odd
+.ce_attendance_list_viewer tr.odd
 {
 	background: #ddd;
 }
 
-.mod_attendance_list td
+.ce_attendance_list_viewer td
 {
 	text-align: center;
 	width: 50px;
@@ -33,54 +32,97 @@
 	border-left: 1px dashed #ccc;
 }
 
-.mod_attendance_list td.col_member
+.ce_attendance_list_viewer td.col_member
 {
 	text-align: left;
 	width: auto;
 	border: 0px;
 }
 
+/* Expired fields */
+
+<<<<<<< HEAD
+.ce_attendance_list_viewer td.expired
+=======
+.mod_attendance_list td.expired
+>>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
+{
+	background: #bbb;
+}
+
 /* User definitons  */
 
-.mod_attendance_list tr.logged_user
+.ce_attendance_list_viewer tr.logged_user
 {
 	border-top: 1px dashed #f00;
 	border-bottom: 1px dashed #f00;
+	background-color: #fbb;
 }
 
-.mod_attendance_list tr.coach
+<<<<<<< HEAD
+.ce_attendance_list_viewer tr.logged_user td.expired
+=======
+.mod_attendance_list tr.logged_user td.expired
+>>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
+{	
+	background-color: #d58f8f;
+}
+
+.ce_attendance_list_viewer tr.coach
 {
 	border-bottom: #666 3px double;
 }
 
-.mod_attendance_list tr.coach i
+.ce_attendance_list_viewer tr.coach i
 {
 	font-size: 0.75em;
 }
 
 /* Event data definitions */
 
-.mod_attendance_list thead td, .mod_attendance_list td.tableFoot
+.ce_attendance_list_viewer thead td, .ce_attendance_list_viewer td.tableFoot
 {
 	vertical-align: top;
 	font-size: 0.8em;	
 }
 
-.mod_attendance_list thead td p.al_title
-{
-	min-height: 50px;
-	margin-bottom: 10px;
+.ce_attendance_list_viewer thead td div.al_title
+{	
+	margin-bottom: 25px;
 }
 
-.mod_attendance_list thead td p.al_date
+.ce_attendance_list_viewer thead td p.al_date
 {
 	min-height: 35px;
 	margin-bottom: 10px;	
 }
+<<<<<<< HEAD
 
-/* Expired fields */
+/* Hoverbox CSS */
 
-.mod_attendance_list td.expired
+.hover_info
 {
-	background: #bbb;
+    display: none;
+    text-align: left;
+    padding: 10px;    
+    min-height: 140px;
+    min-height: 140px;
+    background: white;
+    border: #ccc solid 2px;
+    border-radius: 8px;
 }
+
+.hover_info td
+{    
+    text-align: left;    
+    border: none;
+    font-size: 1em !important;
+    width: auto;
+}
+
+.hover_info tr
+{
+    border: none !important;
+}
+=======
+>>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb

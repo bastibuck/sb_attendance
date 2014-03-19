@@ -3,12 +3,12 @@
 /**
  * Contao Open Source CMS
  *
- * Copyright (c) 2005-2013 Leo Feyer
+ * Copyright (c) 2005-2014 Leo Feyer
  *
  * @package   Attendance
  * @author    Sebastian Buck
  * @license   LGPL
- * @copyright Sebastian Buck 2013
+ * @copyright Sebastian Buck 2014
  */
 
 

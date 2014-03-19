@@ -3,7 +3,7 @@
 /**
  * Contao Open Source CMS
  *
- * Copyright (c) 2005-2013 Leo Feyer
+ * Copyright (c) 2005-2014 Leo Feyer
  *
  * @package Sb_attendance
  * @link    https://contao.org
@@ -12,25 +12,21 @@
 
 
 /**
- * Register the namespaces
- */
-ClassLoader::addNamespaces(array
-(
-	'Attendance',
-));
-
-
-/**
  * Register the classes
  */
 ClassLoader::addClasses(array
 (
-	'AttendanceHooks'            => 'system/modules/sb_attendance/AttendanceHooks.php',
+	'AttendanceHooks'      => 'system/modules/sb_attendance/AttendanceHooks.php',
 	// Models
-	'Attendance\AttendanceModel' => 'system/modules/sb_attendance/models/AttendanceModel.php',
+<<<<<<< HEAD
+	'sb_attendanceModel'   => 'system/modules/sb_attendance/models/sb_attendanceModel.php',
+=======
+	'sb_attendanceSettingsModel' => 'system/modules/sb_attendance/models/sb_attendanceSettingsModel.php',
+>>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
 
 	// Modules
-	'ModuleAttendanceList'       => 'system/modules/sb_attendance/modules/ModuleAttendanceList.php',
+	'AttendanceListViewer' => 'system/modules/sb_attendance/modules/AttendanceListViewer.php',
+	'UpdateAttendance'     => 'system/modules/sb_attendance/modules/UpdateAttendance.php',
 ));
 
 
@@ -39,5 +35,5 @@ ClassLoader::addClasses(array
  */
 TemplateLoader::addFiles(array
 (
-	'mod_attendance_list' => 'system/modules/sb_attendance/templates',
+	'ce_attendance_list_viewer' => 'system/modules/sb_attendance/templates',
 ));
