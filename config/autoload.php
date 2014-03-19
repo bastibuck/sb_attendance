@@ -18,7 +18,7 @@ ClassLoader::addClasses(array
 (
 	'AttendanceHooks'      => 'system/modules/sb_attendance/AttendanceHooks.php',
 	// Models
-	'sb_attendanceModel'   => 'system/modules/sb_attendance/models/sb_attendanceModel.php'
+	'sb_attendanceModel'   => 'system/modules/sb_attendance/models/sb_attendanceModel.php',
 
 	// Modules
 	'AttendanceListViewer' => 'system/modules/sb_attendance/modules/AttendanceListViewer.php',
