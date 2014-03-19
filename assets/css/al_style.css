@@ -41,15 +41,9 @@
 
 /* Expired fields */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-.ce_attendance_list_viewer td.expired
-=======
+.ce_attendance_list_viewer td.expired,
+.mod_attendance_list td.expired,
 .mod_attendance_list td.expired
->>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
-=======
-.mod_attendance_list td.expired
->>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
 {
 	background: #bbb;
 }
@@ -63,15 +57,9 @@
 	background-color: #fbb;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-.ce_attendance_list_viewer tr.logged_user td.expired
-=======
+.ce_attendance_list_viewer tr.logged_user td.expired,
+.mod_attendance_list tr.logged_user td.expired,
 .mod_attendance_list tr.logged_user td.expired
->>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
-=======
-.mod_attendance_list tr.logged_user td.expired
->>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
 {	
 	background-color: #d58f8f;
 }
@@ -87,7 +75,6 @@
 }
 
 /* Event data definitions */
-
 .ce_attendance_list_viewer thead td, .ce_attendance_list_viewer td.tableFoot
 {
 	vertical-align: top;
@@ -104,8 +91,7 @@
 	min-height: 35px;
 	margin-bottom: 10px;	
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 /* Hoverbox CSS */
 
@@ -133,7 +119,3 @@
 {
     border: none !important;
 }
-=======
->>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
-=======
->>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
