@@ -19,7 +19,11 @@ ClassLoader::addClasses(array
 	'AttendanceHooks'      => 'system/modules/sb_attendance/AttendanceHooks.php',
 	// Models
 <<<<<<< HEAD
+<<<<<<< HEAD
 	'sb_attendanceModel'   => 'system/modules/sb_attendance/models/sb_attendanceModel.php',
+=======
+	'sb_attendanceSettingsModel' => 'system/modules/sb_attendance/models/sb_attendanceSettingsModel.php',
+>>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
 =======
 	'sb_attendanceSettingsModel' => 'system/modules/sb_attendance/models/sb_attendanceSettingsModel.php',
 >>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb

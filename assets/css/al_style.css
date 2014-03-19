@@ -42,7 +42,11 @@
 /* Expired fields */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .ce_attendance_list_viewer td.expired
+=======
+.mod_attendance_list td.expired
+>>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
 =======
 .mod_attendance_list td.expired
 >>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
@@ -60,7 +64,11 @@
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .ce_attendance_list_viewer tr.logged_user td.expired
+=======
+.mod_attendance_list tr.logged_user td.expired
+>>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
 =======
 .mod_attendance_list tr.logged_user td.expired
 >>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
@@ -97,6 +105,7 @@
 	margin-bottom: 10px;	
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 /* Hoverbox CSS */
 
@@ -124,5 +133,7 @@
 {
     border: none !important;
 }
+=======
+>>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
 =======
 >>>>>>> 2c28d34499d25187ee1aee58202377ca0be4acfb
