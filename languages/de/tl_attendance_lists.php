@@ -57,6 +57,9 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expireTime'][1] = 'Legen Sie die 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][0] = 'Dritte Option deaktivieren';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][1] = 'Die Dritte Statusoption "komme später" wird hierüber de/aktiviert.';
 
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_askReason'][0] = 'Grund der Abwesenheit';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_askReason'][1] = 'Sollen Mitglieder beim Ändern des Status auf "abwesend" nach dem Grund gefragt werden?';
+
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_defaultStatus'][0] = 'Standard Status';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_defaultStatus'][1] = 'Dieser Status wird für neue Felder verwendet.';
 

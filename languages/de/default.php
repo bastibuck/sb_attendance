@@ -12,15 +12,17 @@
  */
 
 $GLOBALS['TL_LANG']['al_frontend']['unknown'] = 'Unbekannt';
-$GLOBALS['TL_LANG']['al_frontend']['yes'] = 'Anwesend';
-$GLOBALS['TL_LANG']['al_frontend']['no'] = 'Abwesend';
-$GLOBALS['TL_LANG']['al_frontend']['later'] = 'Komme später';
+$GLOBALS['TL_LANG']['al_frontend']['yes'] = 'Anwesend&#10;';
+$GLOBALS['TL_LANG']['al_frontend']['no'] = 'Abwesend&#10;';
+$GLOBALS['TL_LANG']['al_frontend']['later'] = 'Komme später&#10;';
 
 $GLOBALS['TL_LANG']['al_frontend']['time'] = ' Uhr';
 $GLOBALS['TL_LANG']['al_frontend']['attendants'] = 'Spieler';
 
 $GLOBALS['TL_LANG']['al_frontend']['cancel'] = 'Termin absagen';
 $GLOBALS['TL_LANG']['al_frontend']['noUser'] = 'kein Mitglied eingeloggt. <br>Statusänderungen sind nur nach einem erfolgreichen Login möglich.';
+
+$GLOBALS['TL_LANG']['al_frontend']['reason'] = ' &#10;&#10;Grund: ';
 
 /**
  * Member roles

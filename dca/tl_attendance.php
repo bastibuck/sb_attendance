@@ -63,6 +63,11 @@ $GLOBALS['TL_DCA']['tl_attendance'] = array
         'attendance_id' => array
         (
             'sql' => "int(10) unsigned NOT NULL"
+        ),
+        // Grund der Abwesenheit
+        'reason' => array
+        (
+            'sql' => "varchar(255) NOT NULL default ''"
         )
     )
 );

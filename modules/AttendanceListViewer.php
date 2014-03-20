@@ -38,14 +38,15 @@ class AttendanceListViewer extends \ContentElement
         $iconSetPath, 
         $strName,
         $tstamp,
-        $attendanceID) 
+        $attendanceID,
+        $flagAskReason) 
     {
         $attendanceName = array('unknown', 'yes', 'no', 'later');
 
         // Änderungszeitpunkt zusammensetzen
         if ($tstamp != 0)
         {
-            $timeChanged = ' (';
+            $timeChanged = '(';
             $timeChanged .= date($GLOBALS['TL_CONFIG']['datimFormat'], $tstamp);
             $timeChanged .= $GLOBALS['TL_LANG']['al_frontend']['time'];
             $timeChanged .= ')';
@@ -69,21 +70,40 @@ class AttendanceListViewer extends \ContentElement
             $strStatusField .= " class='expired'";
             $strExpired = '_expired';
         }
-
+        
+        // Grund der Abwesenheit abfragen
+        if ($att == 1)
+        {
+            $giveReason = "onSubmit='return saveReason(this.name);'";
+        }
+        
+        // Grund der Abwesenheit auslesen und auf Variable speichern
+        if ($att == 2 && $flagAskReason==1)
+        {
+            $resultReason = \sb_attendanceModel::findAttendance($intReiheID, $intTerminID, $attendanceID);            
+            if ($resultReason->reason!="0" && $resultReason->reason!="")
+            {
+                $strReason = $GLOBALS['TL_LANG']['al_frontend']['reason'];
+                $strReason .= $resultReason->reason;
+            }
+            
+        }
+        
         // Bearbeitbare Felder erzeugen
         if ($flagEdit) 
         {
-            $strStatusField .= ">"
-                . "<form action='" . Environment::get('requestUri') . "' method='POST'>
-                        <input type='hidden' name='REQUEST_TOKEN' value='{{request_token}}'>
-                        <input type='image' 
-                               src='system/modules/sb_attendance/assets/img/" . $iconSetPath . "/" . $attendanceName[$att] . $strExpired . ".png'
-                               alt='" . $strAltTitleTag . "'
-                               title='" . $strAltTitleTag . "'>
-                        <input type='hidden' value='" . $att . "' name='status'>
-                        <input type='hidden' value='" . $attendanceID . "' name='attendanceID'>
-                        <input type='hidden' value='" . $intReiheID . "' name='m_id'>
-                        <input type='hidden' value='" . $intTerminID . "' name='e_id'>
+            $strStatusField .= ">
+                <form ".$giveReason." name='".$attendanceID."_".$intReiheID."_".$intTerminID."' action='" . Environment::get('requestUri') . "' method='POST'>
+                    <input type='hidden' name='REQUEST_TOKEN' value='{{request_token}}'>
+                    <input type='image' 
+                           src='system/modules/sb_attendance/assets/img/" . $iconSetPath . "/" . $attendanceName[$att] . $strExpired . ".png'
+                           alt='" . $strAltTitleTag . $strReason."'
+                           title='" . $strAltTitleTag . $strReason."'>
+                    <input type='hidden' value='" . $att . "' name='status'>
+                    <input type='hidden' value='" . $attendanceID . "' name='attendanceID'>
+                    <input type='hidden' value='" . $intReiheID . "' name='m_id'>
+                    <input type='hidden' value='" . $intTerminID . "' name='e_id'>
+                    <input type='hidden' value='0' name='reason'>
                 </form></td>";
         }
         // nicht bearbeitbare Felder erzeugen
@@ -106,7 +126,8 @@ class AttendanceListViewer extends \ContentElement
         $intEventID,
         $intStatus,
         $intOldStatus,        
-        $attendance_ID)
+        $attendance_ID,
+        $reason)
     {
         $flagDisableThird = \sb_attendanceModel::findSettings($attendance_ID, 'al_disableThird');
         
@@ -143,7 +164,7 @@ class AttendanceListViewer extends \ContentElement
             $time = time();
 
             // Eintragen in DB
-            \sb_attendanceModel::setAttendance($intNewStatus, $time, $intMemberID, $intEventID, $attendance_ID);
+            \sb_attendanceModel::setAttendance($intNewStatus, $time, $reason, $intMemberID, $intEventID, $attendance_ID);
         }
     }
 
@@ -168,6 +189,9 @@ class AttendanceListViewer extends \ContentElement
         // optionales CSS - Daten laden			
         $flagUseCSS = \sb_attendanceModel::findSettings($attendance_ID, 'al_useCSS'); 
         
+        // optionales CSS - Daten laden			
+        $flagAskReason = \sb_attendanceModel::findSettings($attendance_ID, 'al_askReason'); 
+                
         // Hoverbox-Status laden			
         $flagShowInfo = \sb_attendanceModel::findSettings($attendance_ID, 'al_showInfos');
        
@@ -228,11 +252,12 @@ class AttendanceListViewer extends \ContentElement
             $int_POST_eventID = $this->Input->post('e_id');
             $int_POST_status = $this->Input->post('status');
             $int_POST_attendanceID = $this->Input->post('attendanceID');
+            $int_POST_reason = $this->Input->post('reason');            
             
             $intOldStatus = \sb_attendanceModel::findAttendance($int_POST_memberID, $int_POST_eventID, $int_POST_attendanceID);     
                         
             // Funktion zur Statusänderung aufrufen
-            $this->changeStatus($int_POST_memberID,$int_POST_eventID,$int_POST_status,$intOldStatus,$int_POST_attendanceID);            
+            $this->changeStatus($int_POST_memberID,$int_POST_eventID,$int_POST_status,$intOldStatus,$int_POST_attendanceID,$int_POST_reason);            
         }
         
         // Termin abgesagt
@@ -314,6 +339,14 @@ class AttendanceListViewer extends \ContentElement
         {
             $GLOBALS['TL_CSS']['al_css'] = 'system/modules/sb_attendance/assets/css/al_style.css';            
         }
+        
+        /**
+         * JS einbinden
+         */        
+        if ($flagAskReason == 1 && TL_MODE == 'FE') 
+        {            
+            $GLOBALS['TL_JAVASCRIPT']['al_js'] = 'system/modules/sb_attendance/assets/js/saveReason.js';         
+        }        
         
         /**
          * Zukünftige und abgelaufene Events trennen
@@ -556,7 +589,8 @@ class AttendanceListViewer extends \ContentElement
                             $iconSetPath, 
                             $strName, 
                             $attendance['tstamp'],
-                            $attendance_ID);
+                            $attendance_ID,
+                            $flagAskReason);
 
                     array_push($arrayStati, $att);
                 }

@@ -12,15 +12,17 @@
  */
 
 $GLOBALS['TL_LANG']['al_frontend']['unknown'] = 'unknown';
-$GLOBALS['TL_LANG']['al_frontend']['yes'] = 'attending';
-$GLOBALS['TL_LANG']['al_frontend']['no'] = 'absent';
-$GLOBALS['TL_LANG']['al_frontend']['later'] = 'will be late';
+$GLOBALS['TL_LANG']['al_frontend']['yes'] = 'attending&#10;';
+$GLOBALS['TL_LANG']['al_frontend']['no'] = 'absent&#10;';
+$GLOBALS['TL_LANG']['al_frontend']['later'] = 'will be late&#10;';
 
 $GLOBALS['TL_LANG']['al_frontend']['time'] = ' ';
 $GLOBALS['TL_LANG']['al_frontend']['attendants'] = 'Attendants';
 
 $GLOBALS['TL_LANG']['al_frontend']['cancel'] = 'Cancel event';
 $GLOBALS['TL_LANG']['al_frontend']['noUser'] = 'No member is logged in.<br>Changing a status is only possible after login.';
+
+$GLOBALS['TL_LANG']['al_frontend']['reason'] = ' &#10;&#10;Reason: ';
 
 /**
  * Member roles

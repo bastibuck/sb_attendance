@@ -88,7 +88,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
                         {attendance_calender_legend},al_pickCalendar;
                         {attendance_member_legend},al_pickMembers;
                         {attendance_show_legend},al_expiredEvents,al_expireTime;
-                        {attendance_statusOptions_legend},al_defaultStatus,al_disableThird;
+                        {attendance_statusOptions_legend},al_defaultStatus,al_disableThird,al_askReason;
                         {attendance_memberRoles_legend},al_checkCoach,al_checkCaptain,al_checkAdmin,al_roleAdvice;
                         {attendance_style_legend},al_name,al_iconSet,al_useCSS,al_showInfos;
                      '
@@ -183,6 +183,17 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         'al_disableThird' => array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'],
+            'exclude'   => true,
+            'inputType' => 'checkbox',
+            'sql'       => "varchar(1) NOT NULL default ''",
+            'eval'      => array
+            (
+                'tl_class' => 'w50 m12'
+            )
+        ),
+        'al_askReason' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_askReason'],
             'exclude'   => true,
             'inputType' => 'checkbox',
             'sql'       => "varchar(1) NOT NULL default ''",

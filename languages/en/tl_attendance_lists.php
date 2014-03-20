@@ -57,6 +57,9 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expireTime'][1] = 'Set a locking 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][0] = 'Disable third option';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][1] = 'Third status option "later" will be disabled.';
 
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_askReason'][0] = 'Reason for absence';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_askReason'][1] = 'Should members be asked for the reason after changing a status to "absent"?';
+
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_defaultStatus'][0] = 'Default status';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_defaultStatus'][1] = 'This status will be used for new fields.';
 

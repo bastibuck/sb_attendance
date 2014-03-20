@@ -106,7 +106,7 @@ if (!class_exists('sb_attendanceModel'))
         public static function findAttendance($memberID, $eventID, $attendanceID) 
         {
             $result = Database::getInstance()
-                    ->prepare('SELECT attendance,tstamp FROM tl_attendance WHERE m_id=? AND e_id=? AND attendance_id=?')
+                    ->prepare('SELECT attendance,tstamp,reason FROM tl_attendance WHERE m_id=? AND e_id=? AND attendance_id=?')
                     ->execute($memberID, $eventID, $attendanceID);
             $attendanceFound = $result;
 
@@ -114,11 +114,11 @@ if (!class_exists('sb_attendanceModel'))
         }
         
         // Funktion zum Ändern eines Status
-        public static function setAttendance($newStatus, $time, $memberID, $eventID, $attendance_ID) 
+        public static function setAttendance($newStatus, $time, $reason, $memberID, $eventID, $attendance_ID) 
         {
             Database::getInstance()
-                    ->prepare('UPDATE tl_attendance SET attendance=?,tstamp=? WHERE m_id=? AND e_id=? AND attendance_id=?')
-                    ->execute($newStatus, $time, $memberID, $eventID, $attendance_ID);
+                    ->prepare('UPDATE tl_attendance SET attendance=?,tstamp=?,reason=? WHERE m_id=? AND e_id=? AND attendance_id=?')
+                    ->execute($newStatus, $time, $reason, $memberID, $eventID, $attendance_ID);
         }
         
         public static function cancelEvent($time, $int_POST_eventID, $int_POST_attendanceID) 
