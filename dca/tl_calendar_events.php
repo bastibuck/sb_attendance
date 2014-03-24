@@ -33,10 +33,25 @@ array_insert($GLOBALS['TL_DCA']['tl_calendar_events']['config']['onsubmit_callba
     )
 );
 
+
+/**
+ * Erweitert den Toggler der Termine um eine toggleIcon-Funktion (Aktualisiert tl_attendance)
+ */
+$GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['toggle']['button_callback'] = array 
+    (        
+        'tl_attendanceEvents', 'toggleIcon'
+    );
+
+$GLOBALS['TL_DCA']['tl_calendar_events']['list']['operations']['toggle']['attributes'] = array 
+    (        
+        'onclick="Backend.getScrollOffset();return AjaxRequest.toggleAttendance(this,%s)"'
+    );
+
 /**
  * Palettes
  *
- * Eingabemaske für die Mitglieder-Verwaltung um drei Felder erweitern, wird als vorletzte Gruppe in DCA eingefügt
+ * Eingabemaske für die Mitglieder-Verwaltung um drei Felder erweitern, 
+ * wird als vorletzte Gruppe in DCA eingefügt
  */
 $GLOBALS['TL_DCA']['tl_calendar_events']['subpalettes']['addTime'] .= ",meetingTime";
 
@@ -59,7 +74,9 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['meetingTime'] = array
     'sql'                     => "int(10) unsigned NULL"
 );
 
-		
+// Start- und Endzeiten eines Termin können mitkopiert werden
+$GLOBALS['TL_DCA']['tl_calendar_events']['fields']['startTime']['eval']['doNotCopy'] = false;
+$GLOBALS['TL_DCA']['tl_calendar_events']['fields']['endTime']['eval']['doNotCopy'] = false;
 
 /**
  * Class tl_attendanceEvents
@@ -95,6 +112,27 @@ class tl_attendanceEvents extends tl_calendar_events
             \sb_attendanceModel::deleteFromAttendanceTable('e_id', $dc->activeRecord->id);
         }
     }
+    
+    /* 
+     * Erweiterung der toggler-Icon Funktion
+     */
+    public function toggleIcon($row, $href, $label, $title, $icon, $attributes) 
+    {        
+        $this->toggleAttendance($row['published'], $row['id']);        
+        return parent::toggleIcon($row, $href, $label, $title, $icon, $attributes);
+    }
+
+    private function toggleAttendance($inaktiv, $eventId) 
+    {   
+        if ($inaktiv != 1) 
+        {
+            \sb_attendanceModel::deleteFromAttendanceTable('e_id', $eventId);
+        } 
+        else 
+        {   
+            UpdateAttendance::al_createAttendance("all");                   
+        }
+    }    
 
     /**
      * Call the "al_deleteEvent" callback

@@ -14,7 +14,11 @@
 /**
  * Übersetzungen für die Eingabemaske der Zusatzfelder in der Mitgliederverwaltung
  */
- 
+
+// Operations
+$GLOBALS['TL_LANG']['tl_member']['toggleInactiveMembers'][0] = "Mitglied aktiv/inaktiv setzen (nur Anwesenheitsliste)";
+$GLOBALS['TL_LANG']['tl_member']['toggleInactiveMembers'][1] = "Mitglied ID %s aktiv/inaktiv setzen (nur Anwesenheitsliste)";
+
 // Legends
 $GLOBALS['TL_LANG']['tl_member']['attendance_settings_legend'] = 'Anwesenheitsliste:';
 

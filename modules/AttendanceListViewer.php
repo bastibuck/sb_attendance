@@ -174,7 +174,7 @@ class AttendanceListViewer extends \ContentElement
     protected function compile() 
     {
         // ID der ausgewählten Anwesenheitsliste
-        $attendance_ID = $this->attendance_list;        
+        $attendance_ID = $this->attendance_list; 
         
         /**
          * *****************************************************
@@ -194,10 +194,7 @@ class AttendanceListViewer extends \ContentElement
                 
         // Hoverbox-Status laden			
         $flagShowInfo = \sb_attendanceModel::findSettings($attendance_ID, 'al_showInfos');
-       
-        // Anzahl abgelaufener Termine
-        $intExpiredEvents = \sb_attendanceModel::findSettings($attendance_ID, 'al_expiredEvents');
-
+               
         // Sperrzeit laden
         $expireTime = \sb_attendanceModel::findSettings($attendance_ID, 'al_expireTime');
         $expireTime *= 3600;            
@@ -228,12 +225,61 @@ class AttendanceListViewer extends \ContentElement
         {
             $this->Template->noRecords = "Fehler - Übersetzung definieren";
         }
+        
+        /*
+         *  Pagination 
+         */
+            // aktuelle Seite laden
+            $page = $this->Input->get('page') ? $this->Input->get('page') : 1; 
+
+            // Elemente pro Seite
+            $perPage = \sb_attendanceModel::findSettings($attendance_ID, 'al_eventsPerPage');
+                        
+            // Anzahl anzuzeigende, abgelaufene Termine
+            $intExpiredEvents = \sb_attendanceModel::findSettings($attendance_ID, 'al_expiredEvents');
+            
+            // Zahl abgelaufener Events
+            $expiredEvents = \sb_attendanceModel::findExpiredEventsNumber($attendance_ID);
+            
+            // Fehler abfangen, wenn größere Zahl anzuzeigender, abgelaufener 
+            // Termine größer ist als tatsächliche Zahl abgelaufener Termine
+            if ($intExpiredEvents > $expiredEvents)
+            {
+                $intExpiredEvents = $expiredEvents;                
+            }
+
+            // Berechnung der Gesamtzahl
+            $totalRecords = count($arrayTerminIDs) - $expiredEvents + $intExpiredEvents;
+            
+            // wo soll mit dem Lesen der Daten angefangen werden
+            $offset = ($page - 1) * $perPage + $expiredEvents - $intExpiredEvents;     
+
+            // Pagination Menu (muss irgendwo nach der Ermittlung der Anzahlsätze (COUNT) stehen)
+            $objPagination = new Pagination($totalRecords, $perPage); 
+            $this->Template->pagination = $objPagination->generate("\n  ");        
+
+            // Fetch data (in Abhängigkeit von $perPage)
+            if ($perPage) 
+            { 
+               $resultTermine = Database::getInstance()
+                        ->prepare
+                            ('
+                                SELECT DISTINCT t1.id, t1.title, t1.startDate, t1.startTime, t1.location, t1.teaser, t1.meetingTime 
+                                FROM tl_calendar_events t1 
+                                JOIN tl_attendance t2 
+                                ON (t2.e_id = t1.id AND t2.attendance_id=?) 
+                                ORDER BY t1.startTime
+                                LIMIT '.$offset.','.$perPage.'
+                            ')
+                        ->execute($attendance_ID);
+               $arrayTerminIDs= $resultTermine->fetchAllAssoc();
+            }      
 
         // Trainer suchen        
-       $intCoachID = \sb_attendanceModel::findMemberRoles('al_Coach', $attendance_ID);
+        $intCoachID = \sb_attendanceModel::findMemberRoles('al_Coach', $attendance_ID);
 
         // Kapitän suchen
-       $intCaptainID = \sb_attendanceModel::findMemberRoles('al_Captain', $attendance_ID);
+        $intCaptainID = \sb_attendanceModel::findMemberRoles('al_Captain', $attendance_ID);
 
         // Admin suchen
         $intAdminID = \sb_attendanceModel::findMemberRoles('al_Admin', $attendance_ID);
@@ -302,7 +348,7 @@ class AttendanceListViewer extends \ContentElement
                 $header.= "Content-Type: text/plain;\n\t charset=\"utf-8\"\n"; 
                 $header.= "Content-Transfer-Encoding: 8bit\n"; 
                 
-                mail($empfaenger, $betreff, $nachricht, $header);
+                //mail($empfaenger, $betreff, $nachricht, $header);
             }
             
         }
@@ -410,13 +456,14 @@ class AttendanceListViewer extends \ContentElement
                         <h2>".$termin['title']."</h2>
                         <table>
                             <tr>
-                                <td>Datum: </td><td>".date($GLOBALS['TL_CONFIG']['dateFormat'], $termin['startDate'])."</td>
+                                <td>".$GLOBALS['TL_LANG']['al_frontend']['datum']."</td><td>".date($GLOBALS['TL_CONFIG']['dateFormat'], $termin['startDate'])."</td>
                             </tr>";
                     if ($termin['meetingTime']!=0)
                     {
                         $strTitle .= "
                             <tr>
-                                <td>Treffen: </td><td>".date($GLOBALS['TL_CONFIG']['timeFormat'], $termin['meetingTime']) 
+                                <td>".$GLOBALS['TL_LANG']['al_frontend']['treffen']."</td>
+                                <td>".date($GLOBALS['TL_CONFIG']['timeFormat'], $termin['meetingTime']) 
                                 . $GLOBALS['TL_LANG']['al_frontend']['time']."</td>
                             </tr>";
                     }
@@ -424,7 +471,7 @@ class AttendanceListViewer extends \ContentElement
                     {
                         $strTitle .= "
                             <tr>
-                                <td>Anpfiff: </td><td>".date($GLOBALS['TL_CONFIG']['timeFormat'], $termin['startTime']) 
+                                <td>".$GLOBALS['TL_LANG']['al_frontend']['anpfiff']."</td><td>".date($GLOBALS['TL_CONFIG']['timeFormat'], $termin['startTime']) 
                                 . $GLOBALS['TL_LANG']['al_frontend']['time']."</td>
                             </tr>"; 
                     }
@@ -432,14 +479,14 @@ class AttendanceListViewer extends \ContentElement
                     {
                         $strTitle .= "
                             <tr>
-                                <td>Ort: </td><td>".$termin['location']."</td>
+                                <td>".$GLOBALS['TL_LANG']['al_frontend']['ort']."</td><td>".$termin['location']."</td>
                             </tr>";
                     }
                     if ($termin['teaser'])
                     {
                         $strTitle .= "
                             <tr>
-                                <td>Infos: </td><td>".$termin['teaser']."</td>
+                                <td>".$GLOBALS['TL_LANG']['al_frontend']['infos']."</td><td>".$termin['teaser']."</td>
                             </tr>";
                     }
                     
@@ -447,7 +494,7 @@ class AttendanceListViewer extends \ContentElement
                         <tr>
                             <td>{{event::}}</td>
                             <td><a href='{{event_url::".$termin['id']."}}' 
-                                   title='{{event_title::".$termin['id']."}}'>Alle Informationen</a>
+                                   title='{{event_title::".$termin['id']."}}'>".$GLOBALS['TL_LANG']['al_frontend']['link']."</a>
                             </td>
                         </tr>";
                     $strTitle .= "

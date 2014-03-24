@@ -20,7 +20,6 @@
 $GLOBALS['TL_LANG']['tl_attendance_lists']['title_legend'] = 'Titel und Überschrift';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_calender_legend'] = 'Kalender-Auswahl';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_member_legend'] = 'Mitglieder-Gruppen';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_show_legend'] = 'Abgelaufene Termine und Sperrzeiten';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_statusOptions_legend'] = 'Statusoptionen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_memberRoles_legend'] = 'Mitglieder markieren';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_style_legend'] = 'Darstellungsoptionen';
@@ -54,6 +53,9 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expiredEvents'][1] = 'Wie viele a
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expireTime'][0] = 'Sperrzeit von Terminen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expireTime'][1] = 'Legen Sie die Sperrzeit (in Stunden) fest, ab wann die Statusänderungen vor einem Termin gesperrt werden sollen.';
 
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'][0] = 'Termine pro Seite';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'][1] = 'Legen Sie fest, wie viele Termine pro Seite angezeigt werden sollen (Pagination). Bei "0" wird Pagination deaktiviert.';
+
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][0] = 'Dritte Option deaktivieren';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][1] = 'Die Dritte Statusoption "komme später" wird hierüber de/aktiviert.';
 
@@ -82,7 +84,7 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Admin'][0] = 'Administrator';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Admin'][1] = '';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][0] = 'Hinweis';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][1] = 'Mitglieder können in den Mitgliedereinstellungen inaktiv gesetzt werden und tauchen dann nicht mehr in der Liste auf.<br>';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][1] = "Mitglieder können in den <a href='".Environment::get('path')."/contao/main.php?do=member'>Mitgliedereinstellungen</a> inaktiv gesetzt werden und tauchen dann nicht mehr in der Liste auf.<br>";
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'][0] = 'Darstellung des Namen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'][1] = 'Wie soll der Name eines Mitgliedes angezeigt werden?';

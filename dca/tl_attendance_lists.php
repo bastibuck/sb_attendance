@@ -86,11 +86,10 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         '__selector__'  => array('al_checkCoach','al_checkCaptain','al_checkAdmin'),
         'default' => '  {title_legend},title;
                         {attendance_calender_legend},al_pickCalendar;
-                        {attendance_member_legend},al_pickMembers;
-                        {attendance_show_legend},al_expiredEvents,al_expireTime;
-                        {attendance_statusOptions_legend},al_defaultStatus,al_disableThird,al_askReason;
+                        {attendance_member_legend},al_pickMembers;                        
+                        {attendance_statusOptions_legend},al_defaultStatus,al_disableThird,al_askReason,al_expireTime;
                         {attendance_memberRoles_legend},al_checkCoach,al_checkCaptain,al_checkAdmin,al_roleAdvice;
-                        {attendance_style_legend},al_name,al_iconSet,al_useCSS,al_showInfos;
+                        {attendance_style_legend},al_expiredEvents,al_eventsPerPage,al_name,al_iconSet,al_useCSS,al_showInfos;
                      '
     ),
     	// Subpalettes
@@ -163,7 +162,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
                 'mandatory' => true,
                 'rgxp'      => 'digit',
                 'nospace'   => true,
-                'tl_class'  => 'w50'
+                'tl_class'  => 'm12 w50'
             )
         ),
         'al_expireTime' => array
@@ -178,6 +177,20 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
                 'rgxp'      => 'digit',
                 'nospace'   => true,
                 'tl_class'  => 'w50'
+            )
+        ),
+        'al_eventsPerPage' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'],
+            'exclude'   => true,
+            'inputType' => 'text',
+            'sql'       => "int(2) NOT NULL default '8'",
+            'eval'      => array
+            (
+                'mandatory' => true,
+                'rgxp'      => 'digit',
+                'nospace'   => true,
+                'tl_class'  => 'm12 w50'
             )
         ),
         'al_disableThird' => array
@@ -309,7 +322,11 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'inputType' => 'radio',
             'sql'       => "varchar(10) NOT NULL default 'username'",
             'options'   => array('username', 'firstname', 'lastname', 'first_last'),
-            'reference' => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_name']
+            'reference' => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'],
+            'eval'      => array
+            (                
+                'tl_class' => 'm12 clr'
+            )
         ),
         'al_iconSet' => array
         (

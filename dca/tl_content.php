@@ -16,7 +16,7 @@
  */
 $GLOBALS['TL_DCA']['tl_content']['palettes']['attendance_list_viewer'] = 
            '{type_legend},type,headline;
-            {attendance_list_legend},attendance_list;
+            {attendance_list_legend},attendance_list,al_tips;
             {protected_legend:hide},protected;
             {expert_legend:hide},invisible,cssID,space';
 
@@ -31,6 +31,19 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['attendance_list'] = array
             'mandatory' => true,
             'includeBlankOption' => true
         )
+);
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['al_tips'] = array
+(    
+    'label'     => &$GLOBALS['TL_LANG']['tl_content']['al_tips'],
+    'exclude'   => true,
+    'inputType' => 'text',
+    'sql'       => "varchar(1) NULL",
+    'eval'      => array
+    (
+        'disabled' => true,
+        'tl_class' => 'm12 tl_info tl_info_fix clr'
+    )
 );
 
 /**

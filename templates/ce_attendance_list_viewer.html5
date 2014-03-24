@@ -52,11 +52,12 @@
                     echo "<td class='tableFoot'>" . $heading['summe'] . $heading['cancelEvent'];
                 }
                 ?>
-            </tr>
+            </tr>           
             
-            
-        </tbody>
+        </tbody>        
     </table>
+    
+    <?php echo $this->pagination; ?>
     
     <p class="error">
         <?php echo $this->noUser; ?>

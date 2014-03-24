@@ -11,7 +11,7 @@
  */
 class UpdateAttendance extends Backend 
 {
-    public function al_createAttendance($dc) 
+    public static function al_createAttendance($dc) 
     {
         // Anwesenheitslisten-IDs holen
         // Wenn eine Liste bearbeitet wurde, nur diesen Datensatz durcharbeiten
@@ -70,18 +70,20 @@ class UpdateAttendance extends Backend
                              AND al_inactiveMember!=1
                              '); 
             $members = $result->fetchAllAssoc();
+            
+            
 
             // Nicht ausgewählte Mitglieder aussortieren
             $chosenMembers = array();
             foreach ($members as $member)
-            {   
+            {                   
                 if (array_intersect(unserialize($member['groups']), $al_mems))
                 {
                     array_push($chosenMembers, $member);
                 }
                 else
                 {  
-                    $this->Database
+                    Database::getInstance()
                             ->prepare("DELETE FROM tl_attendance WHERE attendance_id=? AND m_id=?")
                             ->execute($id, $member['id']);
                 }
@@ -95,7 +97,7 @@ class UpdateAttendance extends Backend
                 {
                     $arrNewData['e_id'] = $event['id'];
                     $arrNewData['attendance_id'] = $id;
-                    $this->Database->prepare("INSERT IGNORE INTO tl_attendance %s")
+                    Database::getInstance()->prepare("INSERT IGNORE INTO tl_attendance %s")
                             ->set($arrNewData)
                             ->execute();
                 }
@@ -109,5 +111,4 @@ class UpdateAttendance extends Backend
                     ->execute($defaultStatus, 0, $id);
         }
     }
-
 }

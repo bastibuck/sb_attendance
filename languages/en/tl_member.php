@@ -10,7 +10,11 @@
  * @license   LGPL
  * @copyright Sebastian Buck 2014
  */
- 
+
+// Operations
+$GLOBALS['TL_LANG']['tl_member']['toggleInactiveMembers'][0] = "Set member as active/inactive (attendance lists only)";
+$GLOBALS['TL_LANG']['tl_member']['toggleInactiveMembers'][1] = "Set member ID %s as active/inactive (attendance lists only)";
+
 // Legends
 $GLOBALS['TL_LANG']['tl_member']['attendance_settings_legend'] = 'Attendance list:';
 

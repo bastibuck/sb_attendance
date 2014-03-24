@@ -20,7 +20,6 @@
 $GLOBALS['TL_LANG']['tl_attendance_lists']['title_legend'] = 'Title and Headline';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_calender_legend'] = 'Calendar options';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_member_legend'] = 'Member groups';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_show_legend'] = 'Expired events and lock time';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_statusOptions_legend'] = 'Status options';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_memberRoles_legend'] = 'Member roles';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_style_legend'] = 'Display options';
@@ -54,6 +53,9 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expiredEvents'][1] = 'How many ex
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expireTime'][0] = 'Lock time for events';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expireTime'][1] = 'Set a locking time (in hours) for events. No more status changes are allowed afterwards.';
 
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'][0] = 'Events per page';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'][1] = 'Define the events per page (pagination). Setting this to "0" will disable pagination.';
+
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][0] = 'Disable third option';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][1] = 'Third status option "later" will be disabled.';
 
@@ -82,7 +84,7 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Admin'][0] = 'Administrator';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Admin'][1] = '';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][0] = 'Tip';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][1] = 'Members can be set as inactive in the member settings.<br>';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][1] = "Members can be set as inactive in the <a href='".Environment::get('path')."/contao/main.php?do=member'>member settings</a>.<br>";
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'][0] = 'Name settings';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'][1] = 'How do you want a member\'s name displayed in the list?';
@@ -97,18 +99,18 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_showInfos'][0] = 'Hoverbox for mo
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_showInfos'][1] = 'Do you want additional information for events to be displayed in a hover-box?';
 
 // Select options
-$GLOBALS['TL_LANG']['tl_module']['flat_thick'] = 'Flat-Design, thick';
-$GLOBALS['TL_LANG']['tl_module']['flat_thick_alternative'] = 'Flat-Design, thick alternative';
-$GLOBALS['TL_LANG']['tl_module']['flat_thin'] = 'Flat-Design thin';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['flat_thick'] = 'Flat-Design, thick';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['flat_thick_alternative'] = 'Flat-Design, thick alternative';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['flat_thin'] = 'Flat-Design, thin';
 
 // options for radio buttons (default status)
-$GLOBALS['TL_LANG']['tl_module']['al_radio']['0'] = 'unknown';
-$GLOBALS['TL_LANG']['tl_module']['al_radio']['1'] = 'attending';
-$GLOBALS['TL_LANG']['tl_module']['al_radio']['2'] = 'absent';
-$GLOBALS['TL_LANG']['tl_module']['al_radio']['3'] = 'later';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_radio']['0'] = 'unknown';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_radio']['1'] = 'attending';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_radio']['2'] = 'absent';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_radio']['3'] = 'later';
 
 // options for name settings
-$GLOBALS['TL_LANG']['tl_module']['al_name']['username'] = 'Username';
-$GLOBALS['TL_LANG']['tl_module']['al_name']['firstname'] = 'Firstname';
-$GLOBALS['TL_LANG']['tl_module']['al_name']['lastname'] = 'Lastname';
-$GLOBALS['TL_LANG']['tl_module']['al_name']['first_last'] = 'First and lastname';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_name']['username'] = 'Username';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_name']['firstname'] = 'Firstname';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_name']['lastname'] = 'Lastname';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_name']['first_last'] = 'First and lastname';

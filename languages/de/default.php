@@ -17,6 +17,13 @@ $GLOBALS['TL_LANG']['al_frontend']['no'] = 'Abwesend&#10;';
 $GLOBALS['TL_LANG']['al_frontend']['later'] = 'Komme später&#10;';
 
 $GLOBALS['TL_LANG']['al_frontend']['time'] = ' Uhr';
+$GLOBALS['TL_LANG']['al_frontend']['datum'] = 'Datum: ';
+$GLOBALS['TL_LANG']['al_frontend']['treffen'] = 'Treffen: ';
+$GLOBALS['TL_LANG']['al_frontend']['anpfiff'] = 'Anpfiff: ';
+$GLOBALS['TL_LANG']['al_frontend']['ort'] = 'Ort: ';
+$GLOBALS['TL_LANG']['al_frontend']['infos'] = 'Informationen: ';
+$GLOBALS['TL_LANG']['al_frontend']['link'] = 'Detailansicht: ';
+
 $GLOBALS['TL_LANG']['al_frontend']['attendants'] = 'Spieler';
 
 $GLOBALS['TL_LANG']['al_frontend']['cancel'] = 'Termin absagen';

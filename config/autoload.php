@@ -25,6 +25,7 @@ ClassLoader::addClasses(array
 	'UpdateAttendance'     => 'system/modules/sb_attendance/modules/UpdateAttendance.php',
 ));
 
+
 /**
  * Register the templates
  */

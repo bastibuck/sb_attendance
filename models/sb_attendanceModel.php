@@ -101,6 +101,23 @@ if (!class_exists('sb_attendanceModel'))
             $return = $resultTermine->fetchAllAssoc();
             return $return;
         }
+        
+        // Funktion, um Anzahl abgelaufener Events zu finden
+        public static function findExpiredEventsNumber($id)
+        {
+            $resultTermine = Database::getInstance()
+                    ->prepare
+                        ('
+                            SELECT DISTINCT t1.id
+                            FROM tl_calendar_events t1 
+                            JOIN tl_attendance t2 
+                            ON (t2.e_id = t1.id AND t1.startDate<? AND t2.attendance_id=?) 
+                            ORDER BY t1.startTime
+                        ')
+                    ->execute(time(),$id);
+            $number = $resultTermine->count();
+            return $number;
+        }
                 
         // Funktion zum Finden eines bestimmten Anwesenheitsstatus
         public static function findAttendance($memberID, $eventID, $attendanceID) 

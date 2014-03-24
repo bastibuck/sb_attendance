@@ -39,14 +39,34 @@ array_insert($GLOBALS['TL_DCA']['tl_member']['config']['ondelete_callback'], -1,
     )
 );
 
-/**
- * List
- *
- * Erweitert die Funktion toggleIcon, die beim Ändern des disable-Status 
- * eines Mitgliedes (Auge) aufgerufen wird, so dass tl_attendance entsprechend aktualisiert wird
- */
-$GLOBALS['TL_DCA']['tl_member']['list']['operations']['toggle']['button_callback'] = array('tl_attendanceMember', 'toggleIcon');
 
+/**
+ * Erweitert den Toggler der Mitglieder um eine toggleIcon-Funktion (Aktualisiert tl_attendance)
+ */
+$GLOBALS['TL_DCA']['tl_member']['list']['operations']['toggle']['button_callback'] = array 
+    (        
+        'tl_attendanceMember', 'toggleIcon'
+    );
+
+$GLOBALS['TL_DCA']['tl_member']['list']['operations']['toggle']['attributes'] = array 
+    (        
+        'onclick="Backend.getScrollOffset();return AjaxRequest.toggleAttendance(this,%s)"'
+    );
+
+ /**
+ * Fügt den Mitgliedern einen zusätzlichen toggler für inaktive Mitglieder hinzu
+ */  
+
+array_insert($GLOBALS['TL_DCA']['tl_member']['list']['operations'],4, array 
+    (
+        'toggleInactiveMembers' => array
+        (
+            'label'               => &$GLOBALS['TL_LANG']['tl_member']['toggleInactiveMembers'],
+            'icon'                => 'system/modules/sb_attendance/assets/icons/activeMember.png',
+            'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleInactiveMember(this,%s)"',
+            'button_callback'     => array('tl_attendanceMember', 'toggleInactiveMemberIcon')
+        )
+    ));
 
 /**
  * Palettes
@@ -85,86 +105,73 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['al_inactiveMember'] = array
  * @author     Sebastian Buck
  * @package    Attendance
  */
-class tl_attendanceMember extends tl_member {
-    /*     * *********************************************************** */
-
-    /**
-     * Base Code-Snippet by: Jürgen (https://community.contao.org/de/member.php?332-J%FCrgen) 
-     * und Cliffen (https://community.contao.org/de/member.php?4741-cliffen)
-     *
-     * Thread: https://community.contao.org/de/showthread.php?28127
-     *
-     * Adapted to this Extension by: Sebastian Buck 2013
-     * Funktioniert erst nach Neuladen der Mitgliederübersicht
+class tl_attendanceMember extends tl_member 
+{
+    /*
+     * Funktionen für das Standard-toggler-Feature der Mitglieder 
+     * (Erweiterung der Standardfunktionen in tl_member)
      */
-
+    
     /**
-     * Overwritten function tl_member.toggleIcon(...)
-     */
+    * Base Code-Snippet by: Jürgen (https://community.contao.org/de/member.php?332-J%FCrgen) 
+    * and Cliffen (https://community.contao.org/de/member.php?4741-cliffen)
+    *
+    * Thread: https://community.contao.org/de/showthread.php?28127
+    *
+    * Adapted to this Extension by: Sebastian Buck 2014 
+    */
+    
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes) 
-    {
-        $this->toggleAttendance($row['disable'], $row['id']);
+    {        
+        $this->toggleAttendance($row['disable'], $row['id']);        
         return parent::toggleIcon($row, $href, $label, $title, $icon, $attributes);
     }
 
-    private function toggleAttendance($inaktiv, $memberId) {
-        if ($inaktiv == 1) {
-            $objUser = $this->Database->prepare("DELETE FROM tl_attendance WHERE m_id=?")
-                    ->execute($memberId);
-        } else {
-            // User-ID holen
-            $result = Database::getInstance()->prepare('SELECT id FROM tl_member WHERE disable!=? AND al_inactiveMember!=?')->execute(1, 1);
-            $members = $result->fetchAllAssoc();
-
-            // Kalender-IDs nur für aktive Kalender holen					
-            $objCals = Database::getInstance()->prepare('SELECT al_pickCalendar FROM tl_attendance_lists')->execute();
-            $al_cals = $objCals->al_pickCalendar;
-            $al_cals = join(',', unserialize($al_cals));
-
-            // Fehler abfangen, wenn kein Anwesenheitsmodul eingerichtet ist
-            if ($al_cals) {
-                // Termine aus inaktiven Kalendern aus tl_attendance löschen
-                $delete = Database::getInstance()
-                        ->prepare("
-										DELETE FROM tl_attendance 
-										WHERE e_id 
-										IN(SELECT id FROM tl_calendar_events WHERE pid NOT IN(" . $al_cals . "))")
-                        ->execute();
-
-                // Termine aus aktiven Kalendern in tl_attendance holen und übergeben
-                $result = Database::getInstance()
-                        ->prepare("
-										SELECT id 
-										FROM tl_calendar_events 
-										WHERE pid 
-										IN(" . $al_cals . ") 
-										ORDER BY id")
-                        ->execute();
-                $events = $result->fetchAllAssoc();
-
-
-                // Aktive Mitglieder und Termine in tl_attendance eintragen
-                foreach ($members as $member) {
-                    $arrNewData['m_id'] = $member['id'];
-                    foreach ($events as $event) {
-                        $arrNewData['e_id'] = $event['id'];
-                        $objData = $this->Database->prepare("INSERT IGNORE INTO tl_attendance %s")->set($arrNewData)->execute();
-                    }
-                }
-            }
+    private function toggleAttendance($inaktiv, $memberId) 
+    {   
+        if ($inaktiv == 1) 
+        {
+            \sb_attendanceModel::deleteFromAttendanceTable('m_id', $memberId);
+        } 
+        else 
+        {   
+            UpdateAttendance::al_createAttendance("all");                   
         }
     }
-
-    /*     * *********************************************************** */
-
-
-
-
-
-
-
-    /*     * ********************* GEHT ************************************** */
-
+    
+    /*
+     * Funktionen für das toggler-Feature für inaktive Mitglieder
+     */
+    
+    // Funktion zum togglen des inactiveMember-Icons und Aufruf der Funktion zur Datenbankaktualisierung
+    public function toggleInactiveMemberIcon($row, $href, $label, $title, $icon, $attributes)
+    {           
+        if (strlen($this->Input->get('taid')))
+        {            
+            $this->toggleInactiveMember($this->Input->get('taid'), ($this->Input->get('state')));            
+            $this->redirect($this->getReferer());
+        }
+ 
+        $href .= '&amp;taid='.$row['id'].'&amp;state='.$row['al_inactiveMember'];
+ 
+        if ($row['al_inactiveMember'])
+        {
+            $icon = 'system/modules/sb_attendance/assets/icons/inactiveMember.png';
+        }        
+ 
+        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
+    }
+    
+    // Funktion, um ein Mitglied inaktiv zu setzen und die Anwesenheitsdatenbank zu aktualisieren
+    private function toggleInactiveMember($intId, $blnInactive)
+    {   
+        // Update the database
+        $this->Database->prepare("UPDATE tl_member SET tstamp=". time() .", al_inactiveMember='" . ($blnInactive ? '' : '1') . "' WHERE id=?")
+            ->execute($intId);
+        
+        \sb_attendanceModel::deleteFromAttendanceTable('m_id', $intId);        
+    }    
+  
     /**
      * Call the "al_SetInactiveMember" callback
      *
@@ -181,14 +188,13 @@ class tl_attendanceMember extends tl_member {
         // Wenn ein Mitglied inaktiv oder deaktiviert ist, wird es gelöscht
         if ($varInactive || $varDisable) 
         {
-            $this->Database->prepare("DELETE FROM tl_attendance WHERE m_id=?")
-                    ->execute($dc->id);
+            \sb_attendanceModel::deleteFromAttendanceTable('m_id', $dc->activeRecord->id);
         }
         // sonst wird es eingetragen (Änderungen am Aktiv-Status, Neues Mitglied)
         else 
         {
             UpdateAttendance::al_createAttendance("all");
-        }
+        }        
     }
 
     /**
