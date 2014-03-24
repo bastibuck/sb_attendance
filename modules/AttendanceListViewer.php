@@ -73,7 +73,7 @@ class AttendanceListViewer extends \ContentElement
         
         // Grund der Abwesenheit abfragen
         if ($att == 1)
-        {
+        {            
             $giveReason = "onSubmit='return saveReason(this.name);'";
         }
         
@@ -104,6 +104,7 @@ class AttendanceListViewer extends \ContentElement
                     <input type='hidden' value='" . $intReiheID . "' name='m_id'>
                     <input type='hidden' value='" . $intTerminID . "' name='e_id'>
                     <input type='hidden' value='0' name='reason'>
+                    <input type='hidden' value='".$GLOBALS['TL_LANG']['al_frontend']['reasonText']."' name='reasonText'>
                 </form></td>";
         }
         // nicht bearbeitbare Felder erzeugen

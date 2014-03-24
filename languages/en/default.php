@@ -30,6 +30,7 @@ $GLOBALS['TL_LANG']['al_frontend']['cancel'] = 'Cancel event';
 $GLOBALS['TL_LANG']['al_frontend']['noUser'] = 'No member is logged in.<br>Changing a status is only possible after login.';
 
 $GLOBALS['TL_LANG']['al_frontend']['reason'] = ' &#10;&#10;Reason: ';
+$GLOBALS['TL_LANG']['al_frontend']['reasonText'] = 'Reason?';
 
 /**
  * Member roles

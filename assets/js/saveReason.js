@@ -11,7 +11,9 @@
  */
 function saveReason(form_name)
 {
-    var reason = prompt("Grund?", "");
+    var reasonText = document.forms[form_name].reasonText.value;
+    
+    var reason = prompt(reasonText, "");
 
     if (reason != null && reason != '')
     {

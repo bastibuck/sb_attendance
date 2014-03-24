@@ -30,6 +30,7 @@ $GLOBALS['TL_LANG']['al_frontend']['cancel'] = 'Termin absagen';
 $GLOBALS['TL_LANG']['al_frontend']['noUser'] = 'kein Mitglied eingeloggt. <br>Statusänderungen sind nur nach einem erfolgreichen Login möglich.';
 
 $GLOBALS['TL_LANG']['al_frontend']['reason'] = ' &#10;&#10;Grund: ';
+$GLOBALS['TL_LANG']['al_frontend']['reasonText'] = 'Grund?';
 
 /**
  * Member roles
