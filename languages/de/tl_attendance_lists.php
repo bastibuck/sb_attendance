@@ -71,11 +71,17 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCoach'][1] = 'Definieren Sie
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Coach'][0] = 'Trainer';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Coach'][1] = '';
 
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][0] = 'optionale Bezeichnung';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][1] = 'Sie können hier eine eigene Bezeichnung eingeben, die anstatt des Standards "<i>Trainer</i>" verwendet wird.';
+
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'][0] = 'Kapitän festlegen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'][1] = 'Definieren Sie einen Mannschaftskapitän für diese Liste.';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Captain'][0] = 'Kapitän';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Captains'][1] = 'Definieren Sie einen Mannschaftskapitän für diese Liste.';
+
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][0] = 'optionale Bezeichnung';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][1] = 'Sie können hier eine eigene Bezeichnung eingeben, die anstatt des Standards "<i>Kapitän</i>" verwendet wird.';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkAdmin'][0] = 'Administrator festlegen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkAdmin'][1] = 'Definieren Sie einen Administrator für diese Liste. Dieses Mitglied erhält erweiterte Rechte.';

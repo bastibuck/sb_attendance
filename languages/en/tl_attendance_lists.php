@@ -71,11 +71,17 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCoach'][1] = 'This member wi
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Coach'][0] = 'Coach';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Coach'][1] = '';
 
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][0] = 'optional description';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][1] = 'Enter an optional description to be used instead of the standard "<i>Coach</i>".';
+
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'][0] = 'Team captain';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'][1] = 'This member is the team\'s captain.';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Captain'][0] = 'Captain';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Captain'][1] = '';
+
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][0] = 'optional description';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][1] = 'Enter an optional description to be used instead of the standard "<i>Captain</i>".';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkAdmin'][0] = 'Assign administrator role';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkAdmin'][1] = 'This member will be granted more rights.';

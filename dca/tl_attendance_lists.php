@@ -96,8 +96,8 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
     	// Subpalettes
     'subpalettes' => array
     (
-        'al_checkCoach'     => 'al_Coach',
-        'al_checkCaptain'   => 'al_Captain',
+        'al_checkCoach'     => 'al_Coach,al_CoachDescription',
+        'al_checkCaptain'   => 'al_Captain,al_CaptainDescription',
         'al_checkAdmin'     => 'al_Admin'
     ),
     // Fields
@@ -185,7 +185,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'],
             'exclude'   => true,
             'inputType' => 'text',
-            'sql'       => "int(2) NOT NULL default '8'",
+            'sql'       => "int(2) NOT NULL default '5'",
             'eval'      => array
             (
                 'mandatory' => true,
@@ -255,6 +255,17 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
                 'mandatory' => true
             )
         ),
+        'al_CoachDescription' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'],
+            'inputType' => 'text',
+            'exclude'   => true,                        
+            'sql'       => "varchar(255) NOT NULL default ''",
+            'eval'      => array
+            (                
+                'maxlength' => 255
+            )
+        ),
         'al_checkCaptain' => array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'],
@@ -278,6 +289,17 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             (
                 'tl_class' => 'm12 clr',
                 'mandatory' => true
+            )
+        ),
+        'al_CaptainDescription' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'],
+            'inputType' => 'text',
+            'exclude'   => true,                        
+            'sql'       => "varchar(255) NOT NULL default ''",
+            'eval'      => array
+            (                
+                'maxlength' => 255
             )
         ),
         'al_checkAdmin' => array

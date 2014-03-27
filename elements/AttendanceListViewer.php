@@ -195,7 +195,13 @@ class AttendanceListViewer extends \ContentElement
                 
         // Hoverbox-Status laden			
         $flagShowInfo = \sb_attendanceModel::findSettings($attendance_ID, 'al_showInfos');
-               
+        
+        // optionale Coach-Bezeichnung laden			
+        $strCoachDescription = \sb_attendanceModel::findSettings($attendance_ID, 'al_CoachDescription');
+        
+        // optionale Kapitän-Bezeichnung laden			
+        $strCaptainDescription = \sb_attendanceModel::findSettings($attendance_ID, 'al_CaptainDescription');
+                
         // Sperrzeit laden
         $expireTime = \sb_attendanceModel::findSettings($attendance_ID, 'al_expireTime');
         $expireTime *= 3600;            
@@ -654,13 +660,29 @@ class AttendanceListViewer extends \ContentElement
             // Trainerrolle Hinweis hinzufügen
             if ($intCoachID == $reihe['id']) 
             {
-                $strName .= " <i>(" . $GLOBALS['TL_LANG']['al_frontend']['coach'] . ")</i>";
+                // Optionale Bezeichnung zuweisen, sonst standard Bezeichnung
+                if ($strCoachDescription)
+                {
+                    $strName .= " <i>(" . $strCoachDescription . ")</i>";
+                }
+                else
+                {
+                    $strName .= " <i>(" . $GLOBALS['TL_LANG']['al_frontend']['coach'] . ")</i>";
+                }                
             }
 
             // Kapitänsrolle Hinweis hinzufügen
             if ($intCaptainID == $reihe['id']) 
             {
-                $strName .= " <i>(" . $GLOBALS['TL_LANG']['al_frontend']['captain'] . ")</i>";
+                // Optionale Bezeichnung zuweisen, sonst standard Bezeichnung
+                if ($strCaptainDescription)
+                {
+                    $strName .= " <i>(" . $strCaptainDescription . ")</i>";
+                }
+                else
+                {
+                    $strName .= " <i>(" . $GLOBALS['TL_LANG']['al_frontend']['captain'] . ")</i>";
+                }
             }
 
             // Zeilenbeginn abhängig vom eingeloggten Nutzer erstellen
