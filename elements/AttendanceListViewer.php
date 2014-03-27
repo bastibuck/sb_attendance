@@ -202,7 +202,7 @@ class AttendanceListViewer extends \ContentElement
 
         // Namendarstellung laden
         $strNameSetting = \sb_attendanceModel::findSettings($attendance_ID, 'al_name');
-
+        
         if ($strNameSetting == "first_last") 
         {
             // String für DB Abfrage anpassen, wenn Vor- und Nachname ausgegeben werden sollen
@@ -214,7 +214,7 @@ class AttendanceListViewer extends \ContentElement
         {
             $strNameSort = $strNameSetting;
         } 
-
+        
         // aktive SpielerIDs aus tl_attendance holen
         $arraySpieler = \sb_attendanceModel::findPlayersIDs($strNameSetting, $strNameSort, $attendance_ID);
 

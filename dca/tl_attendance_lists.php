@@ -22,7 +22,8 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         'dataContainer'     => 'Table',        
         'onsubmit_callback' => array
         (
-            array('UpdateAttendance', 'al_createAttendance')
+            array('UpdateAttendance', 'al_createAttendance'),
+            array('RemoveMemberRoles', 'removeRole')
         ),
         'sql' => array
         (
@@ -440,5 +441,38 @@ class tl_attendance_label extends Backend
         }
         
         return $arrMembers;         
+    }
+}
+
+/**
+ * Class tl_attendance_label
+ *
+ * Zusätzliche Methode, um gesetzte Mitgliederrollen zu entfernen, 
+ * wenn das entsprechende Häkchen entfernt wurde
+ *
+ * @copyright  Sebastian Buck 2014
+ * @author     Sebastian Buck
+ * @package    Attendance
+ */
+class RemoveMemberRoles extends Backend 
+{    
+    public function removeRole($arrRow) 
+    {
+        $id = $arrRow->id;
+        
+        if (!$this->Input->post('al_checkCoach'))
+        {
+            \sb_attendanceModel::removeRole('al_Coach', $id);
+        }  
+        
+        if (!$this->Input->post('al_checkCaptain'))
+        {
+            \sb_attendanceModel::removeRole('al_Captain', $id);
+        } 
+        
+        if (!$this->Input->post('al_checkAdmin'))
+        {
+            \sb_attendanceModel::removeRole('al_Admin', $id);
+        } 
     }
 }

@@ -17,12 +17,14 @@
 ClassLoader::addClasses(array
 (
 	'AttendanceHooks'      => 'system/modules/sb_attendance/AttendanceHooks.php',
+	// Classes
+	'UpdateAttendance'     => 'system/modules/sb_attendance/classes/UpdateAttendance.php',
+
+	// Elements
+	'AttendanceListViewer' => 'system/modules/sb_attendance/elements/AttendanceListViewer.php',
+
 	// Models
 	'sb_attendanceModel'   => 'system/modules/sb_attendance/models/sb_attendanceModel.php',
-
-	// Modules
-	'AttendanceListViewer' => 'system/modules/sb_attendance/modules/AttendanceListViewer.php',
-	'UpdateAttendance'     => 'system/modules/sb_attendance/modules/UpdateAttendance.php',
 ));
 
 

@@ -70,7 +70,7 @@ if (!class_exists('sb_attendanceModel'))
         
         // Funktion zum Finden aller Spieler-IDs in der Anwesenheitsliste
         public static function findPlayersIDs($strNameSetting, $strNameSort, $attendanceID) 
-        {
+        {   
             $resultSpieler = Database::getInstance()
                     ->prepare
                         ('
@@ -78,9 +78,9 @@ if (!class_exists('sb_attendanceModel'))
                             FROM tl_member t1 
                             JOIN tl_attendance t2 
                             ON (t2.m_id = t1.id AND t2.attendance_id=?) 
-                            ORDER BY ?
-                        ')
-                    ->execute($attendanceID, $strNameSort);
+                            ORDER BY '.$strNameSort
+                        )
+                    ->execute($attendanceID);
             $return = $resultSpieler->fetchAllAssoc();
             return $return;
         }
@@ -175,6 +175,14 @@ if (!class_exists('sb_attendanceModel'))
             Database::getInstance()
                 ->prepare("DELETE FROM tl_attendance WHERE e_id IN (SELECT id FROM tl_calendar_events WHERE pid=?)")
 		->execute($delCalID);
-        }        
+        }   
+        
+        // Funktion zum Löschen der Mitgliederrollen einer Liste
+        public static function removeRole($removeRole, $id) 
+        {   
+            Database::getInstance()
+                    ->prepare('UPDATE tl_attendance_lists SET '.$removeRole.'="" WHERE id=?')
+                    ->execute($id);
+        } 
     }
 }
