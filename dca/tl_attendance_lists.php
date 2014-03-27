@@ -248,7 +248,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'exclude'           => true,
             'inputType'         => 'radio',
             'options_callback'  => array ('tl_attendance_label', 'groupMembers'),                    
-            'sql'               => "varchar(1) NOT NULL default ''",
+            'sql'               => "varchar(10) NOT NULL default ''",
             'eval'              => array
             (
                 'tl_class' => 'm12 clr',
@@ -284,7 +284,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'exclude'           => true,
             'inputType'         => 'radio',
             'options_callback'  => array ('tl_attendance_label', 'groupMembers'),                    
-            'sql'               => "varchar(1) NOT NULL default ''",
+            'sql'               => "varchar(10) NOT NULL default ''",
             'eval'              => array
             (
                 'tl_class' => 'm12 clr',
@@ -320,7 +320,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'exclude'           => true,
             'inputType'         => 'radio',
             'options_callback'  => array ('tl_attendance_label', 'groupMembers'),                    
-            'sql'               => "varchar(1) NOT NULL default ''",
+            'sql'               => "varchar(10) NOT NULL default ''",
             'eval'              => array
             (
                 'tl_class' => 'm12 clr',
