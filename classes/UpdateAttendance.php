@@ -26,8 +26,15 @@ class UpdateAttendance extends Backend
         }
         
         foreach ($attendanceIDs as $list)
-        {            
-            $id = $list['id'];
+        {       
+            if (is_array($list))
+            {
+                $id = $list['id'];
+            }
+            else 
+            {
+                $id = $list;                
+            }            
             
             // Ausgewählte Mitgliedergruppen laden        
             $al_mems = unserialize(\sb_attendanceModel::findSettings($id, 'al_pickMembers'));
