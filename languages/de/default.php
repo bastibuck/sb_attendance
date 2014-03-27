@@ -22,7 +22,7 @@ $GLOBALS['TL_LANG']['al_frontend']['treffen'] = 'Treffen: ';
 $GLOBALS['TL_LANG']['al_frontend']['anpfiff'] = 'Anpfiff: ';
 $GLOBALS['TL_LANG']['al_frontend']['ort'] = 'Ort: ';
 $GLOBALS['TL_LANG']['al_frontend']['infos'] = 'Informationen: ';
-$GLOBALS['TL_LANG']['al_frontend']['link'] = 'Detailansicht: ';
+$GLOBALS['TL_LANG']['al_frontend']['link'] = 'Detailansicht';
 
 $GLOBALS['TL_LANG']['al_frontend']['attendants'] = 'Spieler';
 
