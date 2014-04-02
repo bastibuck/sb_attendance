@@ -22,6 +22,7 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_calender_legend'] = 'Kale
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_member_legend'] = 'Mitglieder-Gruppen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_statusOptions_legend'] = 'Statusoptionen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_memberRoles_legend'] = 'Mitglieder markieren';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_descriptions'] = 'Optionale Bezeichnungen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_style_legend'] = 'Darstellungsoptionen';
 
 // Operationen
@@ -71,17 +72,11 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCoach'][1] = 'Definieren Sie
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Coach'][0] = 'Trainer';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Coach'][1] = '';
 
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][0] = 'optionale Bezeichnung';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][1] = 'Sie können hier eine eigene Bezeichnung eingeben, die anstatt des Standards "<i>Trainer</i>" verwendet wird.';
-
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'][0] = 'Kapitän festlegen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'][1] = 'Definieren Sie einen Mannschaftskapitän für diese Liste.';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Captain'][0] = 'Kapitän';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Captains'][1] = 'Definieren Sie einen Mannschaftskapitän für diese Liste.';
-
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][0] = 'optionale Bezeichnung';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][1] = 'Sie können hier eine eigene Bezeichnung eingeben, die anstatt des Standards "<i>Kapitän</i>" verwendet wird.';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkAdmin'][0] = 'Administrator festlegen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkAdmin'][1] = 'Definieren Sie einen Administrator für diese Liste. Dieses Mitglied erhält erweiterte Rechte.';
@@ -91,6 +86,15 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Admin'][1] = '';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][0] = 'Hinweis';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][1] = "Mitglieder können in den <a href='".Environment::get('path')."/contao/main.php?do=member'>Mitgliedereinstellungen</a> inaktiv gesetzt werden und tauchen dann nicht mehr in der Liste auf.<br>";
+
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][0] = 'Bezeichnung "<i>'.$GLOBALS['TL_LANG']['al_frontend']['coach'].'</i>"';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][1] = 'Sie können hier eine eigene Bezeichnung eingeben, die anstatt des Standards "<i>'.$GLOBALS['TL_LANG']['al_frontend']['coach'].'</i>" verwendet wird.';
+
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][0] = 'Bezeichnung "<i>'.$GLOBALS['TL_LANG']['al_frontend']['captain'].'</i>"';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][1] = 'Sie können hier eine eigene Bezeichnung eingeben, die anstatt des Standards "<i>'.$GLOBALS['TL_LANG']['al_frontend']['captain'].'</i>" verwendet wird.';
+
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_AttendantsDescription'][0] = 'Bezeichnung "<i>'.$GLOBALS['TL_LANG']['al_frontend']['attendants'].'</i>"';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_AttendantsDescription'][1] = 'Sie können hier eine eigene Bezeichnung eingeben, die anstatt des Standards "<i>'.$GLOBALS['TL_LANG']['al_frontend']['attendants'].'</i>" verwendet wird (Summe der Teilnehmer).';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'][0] = 'Darstellung des Namen';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'][1] = 'Wie soll der Name eines Mitgliedes angezeigt werden?';

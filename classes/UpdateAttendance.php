@@ -77,8 +77,6 @@ class UpdateAttendance extends Backend
                              AND al_inactiveMember!=1
                              '); 
             $members = $result->fetchAllAssoc();
-            
-            
 
             // Nicht ausgewählte Mitglieder aussortieren
             $chosenMembers = array();

@@ -90,14 +90,15 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
                         {attendance_member_legend},al_pickMembers;                        
                         {attendance_statusOptions_legend},al_defaultStatus,al_disableThird,al_askReason,al_expireTime;
                         {attendance_memberRoles_legend},al_checkCoach,al_checkCaptain,al_checkAdmin,al_roleAdvice;
+                        {attendance_descriptions:hide},al_CoachDescription,al_CaptainDescription,al_AttendantsDescription;
                         {attendance_style_legend},al_expiredEvents,al_eventsPerPage,al_name,al_iconSet,al_useCSS,al_showInfos;
                      '
     ),
     	// Subpalettes
     'subpalettes' => array
     (
-        'al_checkCoach'     => 'al_Coach,al_CoachDescription',
-        'al_checkCaptain'   => 'al_Captain,al_CaptainDescription',
+        'al_checkCoach'     => 'al_Coach',
+        'al_checkCaptain'   => 'al_Captain',
         'al_checkAdmin'     => 'al_Admin'
     ),
     // Fields
@@ -255,17 +256,6 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
                 'mandatory' => true
             )
         ),
-        'al_CoachDescription' => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'],
-            'inputType' => 'text',
-            'exclude'   => true,                        
-            'sql'       => "varchar(255) NOT NULL default ''",
-            'eval'      => array
-            (                
-                'maxlength' => 255
-            )
-        ),
         'al_checkCaptain' => array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'],
@@ -289,17 +279,6 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             (
                 'tl_class' => 'm12 clr',
                 'mandatory' => true
-            )
-        ),
-        'al_CaptainDescription' => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'],
-            'inputType' => 'text',
-            'exclude'   => true,                        
-            'sql'       => "varchar(255) NOT NULL default ''",
-            'eval'      => array
-            (                
-                'maxlength' => 255
             )
         ),
         'al_checkAdmin' => array
@@ -337,6 +316,39 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             (
                 'disabled' => true,
                 'tl_class' => 'tl_info tl_info_fix clr'
+            )
+        ),
+        'al_CoachDescription' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'],
+            'inputType' => 'text',
+            'exclude'   => true,                        
+            'sql'       => "varchar(255) NOT NULL default ''",
+            'eval'      => array
+            (                
+                'maxlength' => 255
+            )
+        ),
+        'al_CaptainDescription' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'],
+            'inputType' => 'text',
+            'exclude'   => true,                        
+            'sql'       => "varchar(255) NOT NULL default ''",
+            'eval'      => array
+            (                
+                'maxlength' => 255
+            )
+        ),
+        'al_AttendantsDescription' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_AttendantsDescription'],
+            'inputType' => 'text',
+            'exclude'   => true,                        
+            'sql'       => "varchar(255) NOT NULL default ''",
+            'eval'      => array
+            (                
+                'maxlength' => 255
             )
         ),
         'al_name' => array

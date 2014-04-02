@@ -22,6 +22,7 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_calender_legend'] = 'Cale
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_member_legend'] = 'Member groups';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_statusOptions_legend'] = 'Status options';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_memberRoles_legend'] = 'Member roles';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_descriptions'] = 'optional descriptions';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['attendance_style_legend'] = 'Display options';
 
 // Operationen
@@ -71,17 +72,11 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCoach'][1] = 'This member wi
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Coach'][0] = 'Coach';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Coach'][1] = '';
 
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][0] = 'optional description';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][1] = 'Enter an optional description to be used instead of the standard "<i>Coach</i>".';
-
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'][0] = 'Team captain';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkCaptain'][1] = 'This member is the team\'s captain.';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Captain'][0] = 'Captain';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Captain'][1] = '';
-
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][0] = 'optional description';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][1] = 'Enter an optional description to be used instead of the standard "<i>Captain</i>".';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkAdmin'][0] = 'Assign administrator role';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_checkAdmin'][1] = 'This member will be granted more rights.';
@@ -91,6 +86,15 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_Admin'][1] = '';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][0] = 'Tip';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_roleAdvice'][1] = "Members can be set as inactive in the <a href='".Environment::get('path')."/contao/main.php?do=member'>member settings</a>.<br>";
+
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][0] = 'Description "<i>'.$GLOBALS['TL_LANG']['al_frontend']['coach'].'</i>"';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'][1] = 'Enter an optional description to be used instead of the standard "<i>'.$GLOBALS['TL_LANG']['al_frontend']['coach'].'</i>".';
+
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][0] = 'Description "<i>'.$GLOBALS['TL_LANG']['al_frontend']['captain'].'</i>"';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'][1] = 'Enter an optional description to be used instead of the standard "<i>'.$GLOBALS['TL_LANG']['al_frontend']['captain'].'</i>".';
+
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_AttendantsDescription'][0] = 'Description "<i>'.$GLOBALS['TL_LANG']['al_frontend']['attendants'].'</i>"';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_AttendantsDescription'][1] = 'Enter an optional description to be used instead of the standard "<i>'.$GLOBALS['TL_LANG']['al_frontend']['attendants'].'</i>" (number of attendants).';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'][0] = 'Name settings';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'][1] = 'How do you want a member\'s name displayed in the list?';

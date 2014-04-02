@@ -201,7 +201,11 @@ class AttendanceListViewer extends \ContentElement
         
         // optionale Kapitän-Bezeichnung laden			
         $strCaptainDescription = \sb_attendanceModel::findSettings($attendance_ID, 'al_CaptainDescription');
-                
+        
+        // optionale Kapitän-Bezeichnung laden			
+        $strAttendantsDescription = \sb_attendanceModel::findSettings($attendance_ID, 'al_AttendantsDescription');
+        
+        
         // Sperrzeit laden
         $expireTime = \sb_attendanceModel::findSettings($attendance_ID, 'al_expireTime');
         $expireTime *= 3600;            
@@ -533,8 +537,17 @@ class AttendanceListViewer extends \ContentElement
             
             // aktive Spieleranzahl holen (abhängig ob ein Trainer definiert ist oder nicht)					
             $resultSpielerzahl = \sb_attendanceModel::findNumberOfParticipants($termin['id'], $intCoachID, $attendance_ID);            
+            
+            if ($strAttendantsDescription)
+            {
+                $strAttendants = $strAttendantsDescription;
+            }
+            else
+            {
+                $strAttendants = $GLOBALS['TL_LANG']['al_frontend']['attendants'];
+            }
 
-            $number = "<p>" . $GLOBALS['TL_LANG']['al_frontend']['attendants'] . ":<br>" . $resultSpielerzahl . "</p>";
+            $number = "<p>" . $strAttendants . ":<br>" . $resultSpielerzahl . "</p>";
 
             $termin['summe'] = $number;
             
@@ -564,6 +577,19 @@ class AttendanceListViewer extends \ContentElement
         /**
          * Zeilen erzeugen
          */
+        // Kapitän an erste Stelle im Array sortieren 
+        // (und später durch Trainer ersetzen: Kapitän-> zweite Stelle)
+        $i = 1;
+        foreach ($arraySpieler as $captain) 
+        {
+            if ($captain['id'] == $intCaptainID) 
+            {
+                array_unshift($arraySpieler, $captain);
+                unset($arraySpieler[$i]);
+            }
+            $i++;
+        }        
+        
         // Trainer an erste Stelle im Array sortieren
         $i = 1;
         foreach ($arraySpieler as $trainer) 

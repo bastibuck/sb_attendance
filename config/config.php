@@ -10,6 +10,7 @@
  * @license   LGPL
  * @copyright Sebastian Buck 2014
  */
+
 /**
  * BACK END MODULES
  *
@@ -52,7 +53,5 @@ if (TL_MODE == 'BE')
 
 /**
  * Hooks
- *
- * Rufen bei bestimmten Aktionen gezielt kleine Methoden auf
  */
 $GLOBALS['TL_HOOKS']['activateAccount'][] = array('AttendanceHooks', 'addUserToAttendance');
