@@ -27,5 +27,6 @@ sb_attandance allowes you to manage attandance of members for calendar events
 - coach can cancel events (incl. email notification for members)
 - additional information displayable via hoverbox
 - members can enter a reason for absence
+- optional descriptions for coach, captain and attendants
 
 
