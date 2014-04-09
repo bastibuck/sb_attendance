@@ -4,118 +4,83 @@
  * @copyright  Sebastian Buck 2014
  * @author     Sebastian Buck
  * @package    Attendance
- */
- 
-/* General definitons */
-
-.ce_attendance_list_viewer table
-{
-	border-spacing: 0;
-	border-collapse: collapse;
+ *//* Variables *//* General definitons */
+.ce_attendance_list_viewer table {
+  border-spacing: 0;
+  border-collapse: collapse;
 }
-
-.ce_attendance_list_viewer tbody tr
-{
-	border-top: 1px dashed #ccc;
+.ce_attendance_list_viewer tbody tr {
+  border-top: 1px dashed #9d9d9d;
 }
-
-.ce_attendance_list_viewer tr.odd
-{
-	background: #ddd;
+.ce_attendance_list_viewer tr.odd {
+  background: #dddddd;
 }
-
-.ce_attendance_list_viewer td
-{
-	text-align: center;
-	width: 50px;
-	padding: 3px 5px;
-	border-left: 1px dashed #ccc;
+.ce_attendance_list_viewer tr.even {
+  background: transparent;
 }
-
-.ce_attendance_list_viewer td.col_member
-{
-	text-align: left;
-	width: auto;
-	border: 0px;
+.ce_attendance_list_viewer td {
+  text-align: center;
+  width: 50px;
+  padding: 3px 5px;
+  border-left: 1px dashed #9d9d9d;
 }
-
+.ce_attendance_list_viewer td.col_member {
+  text-align: left;
+  width: auto;
+  border: 0px;
+}
 /* Expired fields */
-
 .ce_attendance_list_viewer td.expired,
 .mod_attendance_list td.expired,
-.mod_attendance_list td.expired
-{
-	background: #bbb;
+.mod_attendance_list td.expired {
+  background: #bcbcbc;
 }
-
 /* User definitons  */
-
-.ce_attendance_list_viewer tr.logged_user
-{
-	border-top: 1px dashed #f00;
-	border-bottom: 1px dashed #f00;
-	background-color: #fbb;
+.ce_attendance_list_viewer tr.logged_user {
+  border-top: 1px dashed #f00;
+  border-bottom: 1px dashed #f00;
+  background-color: #ffbbbb;
 }
-
 .ce_attendance_list_viewer tr.logged_user td.expired,
 .mod_attendance_list tr.logged_user td.expired,
-.mod_attendance_list tr.logged_user td.expired
-{	
-	background-color: #d58f8f;
+.mod_attendance_list tr.logged_user td.expired {
+  background-color: #cdbcbc;
 }
-
-.ce_attendance_list_viewer tr.coach
-{
-	border-bottom: #666 3px double;
+.ce_attendance_list_viewer tr.coach {
+  border-bottom: #9d9d9d 3px double;
 }
-
-.ce_attendance_list_viewer tr i
-{
-	font-size: 0.75em;
+.ce_attendance_list_viewer tr i {
+  font-size: 0.75em;
 }
-
 /* Event data definitions */
-.ce_attendance_list_viewer thead td, .ce_attendance_list_viewer td.tableFoot
-{
-	vertical-align: top;
-	font-size: 0.8em;	
+.ce_attendance_list_viewer thead td,
+.ce_attendance_list_viewer td.tableFoot {
+  vertical-align: top;
+  font-size: 0.8em;
 }
-
-.ce_attendance_list_viewer thead td div.al_title
-{	
-	margin-bottom: 25px;
+.ce_attendance_list_viewer thead td div.al_title {
+  margin-bottom: 25px;
 }
-
-.ce_attendance_list_viewer thead td p.al_date
-{
-	min-height: 35px;
-	margin-bottom: 10px;	
+.ce_attendance_list_viewer thead td p.al_date {
+  min-height: 35px;
+  margin-bottom: 10px;
 }
-
-
 /* Hoverbox CSS */
-
-.hover_info
-{
-    display: none;
-    text-align: left;
-    padding: 10px;    
-    min-height: 140px;
-    min-height: 140px;
-    background: white;
-    border: #ccc solid 2px;
-    border-radius: 8px;
+.hover_info {
+  display: none;
+  text-align: left;
+  padding: 10px;
+  min-height: 140px;
+  background: white;
+  border: #9d9d9d solid 2px;
+  border-radius: 8px;
 }
-
-.hover_info td
-{    
-    text-align: left;    
-    border: none;
-    font-size: 1em !important;
-    width: auto;
+.hover_info td {
+  text-align: left;
+  border: none;
+  font-size: 1em !important;
+  width: auto;
 }
-
-.hover_info tr
-{
-    border: none !important;
+.hover_info tr {
+  border: none !important;
 }
