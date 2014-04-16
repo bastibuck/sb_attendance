@@ -36,7 +36,7 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['delete'][0] = 'Anwesenheitsliste lö
 $GLOBALS['TL_LANG']['tl_attendance_lists']['delete'][1] = 'Anwesenheitsliste ID %s löschen';
  
 $GLOBALS['TL_LANG']['tl_attendance_lists']['show'][0] = 'Anwesenheitslistendetails';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['show'][1] = 'Details des Anwesenheitsliste ID %s anzeigen';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['show'][1] = 'Details der Anwesenheitsliste ID %s anzeigen';
 
 // Felder 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['title'][0] = 'Name';

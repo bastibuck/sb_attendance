@@ -44,7 +44,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         ),
         'label' => array
         (
-            'fields'         => array('title', 'al_pickCalendars'),            
+            'fields'         => array('title'),            
             'label_callback' => array('tl_attendance_label', 'attendanceLabel')
         ),
         'global_operations' => array
@@ -479,7 +479,7 @@ class tl_attendance_label extends Backend
 }
 
 /**
- * Class tl_attendance_label
+ * Class RemoveMemberRoles
  *
  * Zusätzliche Methode, um gesetzte Mitgliederrollen zu entfernen, 
  * wenn das entsprechende Häkchen entfernt wurde
