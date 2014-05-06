@@ -577,6 +577,19 @@ class AttendanceListViewer extends \ContentElement
         /**
          * Zeilen erzeugen
          */
+        
+        // Eingeloggten Spieler nach oben sortieren (leichtere Bearbeitung)
+        $i = 1;
+        foreach ($arraySpieler as $logged) 
+        {
+            if ($logged['id'] == $intLoggedUserID) 
+            {
+                array_unshift($arraySpieler, $logged);
+                unset($arraySpieler[$i]);
+            }
+            $i++;
+        }
+        
         // Kapitän an erste Stelle im Array sortieren 
         // (und später durch Trainer ersetzen: Kapitän-> zweite Stelle)
         $i = 1;
@@ -588,7 +601,7 @@ class AttendanceListViewer extends \ContentElement
                 unset($arraySpieler[$i]);
             }
             $i++;
-        }        
+        } 
         
         // Trainer an erste Stelle im Array sortieren
         $i = 1;
