@@ -57,8 +57,8 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expireTime'][1] = 'Set a locking 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'][0] = 'Events per page';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'][1] = 'Define the events per page (pagination). Setting this to "0" will disable pagination.';
 
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][0] = 'Disable third option';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][1] = 'Third status option "later" will be disabled.';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][0] = 'Disable option "will be late"';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][1] = 'Status option "will be late" will be disabled.';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_askReason'][0] = 'Reason for absence';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_askReason'][1] = 'Should members be asked for the reason after changing a status to "absent"?';

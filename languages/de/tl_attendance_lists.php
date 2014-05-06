@@ -57,8 +57,8 @@ $GLOBALS['TL_LANG']['tl_attendance_lists']['al_expireTime'][1] = 'Legen Sie die 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'][0] = 'Termine pro Seite';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_eventsPerPage'][1] = 'Legen Sie fest, wie viele Termine pro Seite angezeigt werden sollen (Pagination). Bei "0" wird Pagination deaktiviert.';
 
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][0] = 'Dritte Option deaktivieren';
-$GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][1] = 'Die Dritte Statusoption "komme später" wird hierüber de/aktiviert.';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][0] = 'Option "komme später" deaktivieren';
+$GLOBALS['TL_LANG']['tl_attendance_lists']['al_disableThird'][1] = 'Die Statusoption "komme später" wird hierüber de/aktiviert.';
 
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_askReason'][0] = 'Grund der Abwesenheit';
 $GLOBALS['TL_LANG']['tl_attendance_lists']['al_askReason'][1] = 'Sollen Mitglieder beim Ändern des Status auf "abwesend" nach dem Grund gefragt werden?';
