@@ -71,8 +71,15 @@ class AttendanceListViewer extends \ContentElement
             $strExpired = '_expired';
         }
         
+        
+        $flagDisableThird = \sb_attendanceModel::findSettings($attendanceID, 'al_disableThird');
+         
         // Grund der Abwesenheit abfragen
         if ($att == 3)
+        {            
+            $giveReason = "onSubmit='return saveReason(this.name);'";
+        }
+        else if ($att == 1 && $flagDisableThird == 1)
         {            
             $giveReason = "onSubmit='return saveReason(this.name);'";
         }
