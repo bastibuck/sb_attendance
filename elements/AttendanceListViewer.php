@@ -72,7 +72,7 @@ class AttendanceListViewer extends \ContentElement
         }
         
         // Grund der Abwesenheit abfragen
-        if ($att == 1)
+        if ($att == 3)
         {            
             $giveReason = "onSubmit='return saveReason(this.name);'";
         }
@@ -142,22 +142,22 @@ class AttendanceListViewer extends \ContentElement
                     $intNewStatus = 1;
                     break;
                 case 1:
-                    $intNewStatus = 2;
-                    break;
-                case 2:
                     // Wenn 'Dritte Option deaktivieren' gesetzt wurde, 
-                    // direkt wieder Status 1 setzen
+                    // direkt Status 2 setzen
                     if ($flagDisableThird == 1) 
                     {
-                        $intNewStatus = 1;
+                        $intNewStatus = 2;
                     } 
                     else 
                     {
                         $intNewStatus = 3;
-                    }
+                    }                    
+                    break;
+                case 2:
+                    $intNewStatus = 1;                    
                     break;
                 case 3:
-                    $intNewStatus = 1;
+                    $intNewStatus = 2;
                     break;
             }
 
@@ -602,7 +602,7 @@ class AttendanceListViewer extends \ContentElement
             }
             $i++;
         } 
-        
+                
         // Trainer an erste Stelle im Array sortieren
         $i = 1;
         foreach ($arraySpieler as $trainer) 
