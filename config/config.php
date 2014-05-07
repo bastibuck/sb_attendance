@@ -37,7 +37,8 @@ array_insert($GLOBALS['BE_MOD'], 0, array
  */
 $GLOBALS['TL_CTE']['attendance'] = array
 (
-    'attendance_list_viewer' => 'AttendanceListViewer'
+    'attendance_list_viewer' => 'AttendanceListViewer',
+    'attendance_list_compact' => 'AttendanceListCompact'
 );
 
 

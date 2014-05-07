@@ -12,13 +12,13 @@
  */
 
 /**
- * Class AttendanceListViewer
+ * Class AttendanceListCompact
  *
  * @copyright  Sebastian Buck 2014
  * @author     Sebastian Buck
  * @package    Attendance
  */
-class AttendanceListViewer extends \ContentElement 
+class AttendanceListCompact extends \ContentElement 
 {
     /**
      * Template
@@ -26,7 +26,7 @@ class AttendanceListViewer extends \ContentElement
      *
      * Das zugehörige Template (Ausgabe im Frontend) wird festgelegt
      */
-    protected $strTemplate = 'ce_attendance_list_viewer';
+    protected $strTemplate = 'ce_attendance_list_compact';
 
     // Funktion, um die einzelnen Status Felder zu erzeugen
     private function createStatusField(
@@ -242,54 +242,7 @@ class AttendanceListViewer extends \ContentElement
             $this->Template->noRecords = "Fehler - Übersetzung definieren";
         }
         
-        /*
-         *  Pagination 
-         */
-            // aktuelle Seite laden
-            $page = $this->Input->get('page') ? $this->Input->get('page') : 1; 
-
-            // Elemente pro Seite
-            $perPage = \sb_attendanceModel::findSettings($attendance_ID, 'al_eventsPerPage');
-                        
-            // Anzahl anzuzeigende, abgelaufene Termine
-            $intExpiredEvents = \sb_attendanceModel::findSettings($attendance_ID, 'al_expiredEvents');
-            
-            // Zahl abgelaufener Events
-            $expiredEvents = \sb_attendanceModel::findExpiredEventsNumber($attendance_ID);
-            
-            // Fehler abfangen, wenn größere Zahl anzuzeigender, abgelaufener 
-            // Termine größer ist als tatsächliche Zahl abgelaufener Termine
-            if ($intExpiredEvents > $expiredEvents)
-            {
-                $intExpiredEvents = $expiredEvents;                
-            }
-
-            // Berechnung der Gesamtzahl
-            $totalRecords = count($arrayTerminIDs) - $expiredEvents + $intExpiredEvents;
-            
-            // wo soll mit dem Lesen der Daten angefangen werden
-            $offset = ($page - 1) * $perPage + $expiredEvents - $intExpiredEvents;     
-
-            // Pagination Menu (muss irgendwo nach der Ermittlung der Anzahlsätze (COUNT) stehen)
-            $objPagination = new Pagination($totalRecords, $perPage); 
-            $this->Template->pagination = $objPagination->generate("\n  ");        
-
-            // Fetch data (in Abhängigkeit von $perPage)
-            if ($perPage) 
-            { 
-               $resultTermine = Database::getInstance()
-                        ->prepare
-                            ('
-                                SELECT DISTINCT t1.id, t1.title, t1.startDate, t1.startTime, t1.location, t1.teaser, t1.meetingTime 
-                                FROM tl_calendar_events t1 
-                                JOIN tl_attendance t2 
-                                ON (t2.e_id = t1.id AND t2.attendance_id=?) 
-                                ORDER BY t1.startTime
-                                LIMIT '.$offset.','.$perPage.'
-                            ')
-                        ->execute($attendance_ID);
-               $arrayTerminIDs= $resultTermine->fetchAllAssoc();
-            }      
+        
 
         // Trainer suchen        
         $intCoachID = \sb_attendanceModel::findMemberRoles('al_Coach', $attendance_ID);
@@ -595,30 +548,6 @@ class AttendanceListViewer extends \ContentElement
             $i++;
         }
         
-        // Kapitän an erste Stelle im Array sortieren 
-        // (und später durch Trainer ersetzen: Kapitän-> zweite Stelle)
-        $i = 1;
-        foreach ($arraySpieler as $captain) 
-        {
-            if ($captain['id'] == $intCaptainID) 
-            {
-                array_unshift($arraySpieler, $captain);
-                unset($arraySpieler[$i]);
-            }
-            $i++;
-        } 
-                
-        // Trainer an erste Stelle im Array sortieren
-        $i = 1;
-        foreach ($arraySpieler as $trainer) 
-        {
-            if ($trainer['id'] == $intCoachID) 
-            {
-                array_unshift($arraySpieler, $trainer);
-                unset($arraySpieler[$i]);
-            }
-            $i++;
-        }
 
         // Pro Spieler eine Reihe erzeugen
         foreach ($arraySpieler as $reihe) 
