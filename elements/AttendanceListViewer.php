@@ -820,24 +820,24 @@ class AttendanceListViewer extends \ContentElement
                    ->execute($cal);
            $objCal = $result;
 
-           $htmlAdditionalForm .= "<form name='setAbsent_".$cal."' action='" . Environment::get('requestUri') . "' method='POST'>";
+           $htmlAdditionalForm .= "<p><form name='setAbsent_".$cal."' action='" . Environment::get('requestUri') . "' method='POST'>";
 
            $htmlAdditionalForm .= "<button name='btn_setAbsent'>Austragen aus Kalender \"".$objCal->title."\"</button>";
            $htmlAdditionalForm .= "<input type='hidden' name='REQUEST_TOKEN' value='{{request_token}}'>";
            $htmlAdditionalForm .= "<input type='hidden' value='".$intLoggedUserID."' name='activeUserID'>";
            $htmlAdditionalForm .= "<input type='hidden' value='".$cal."' name='chosenCal'>";
 
-           $htmlAdditionalForm .= "</form>";
+           $htmlAdditionalForm .= "</form></p>";
          }
 
-         $htmlAdditionalForm .= "<form name='setAttending' action='" . Environment::get('requestUri') . "' method='POST'>";
+         $htmlAdditionalForm .= "<p><form name='setAttending' action='" . Environment::get('requestUri') . "' method='POST'>";
 
          $htmlAdditionalForm .= "<button name='btn_setAttending'>In alle wieder eintragen</button>";
          $htmlAdditionalForm .= "<input type='hidden' name='REQUEST_TOKEN' value='{{request_token}}'>";
          $htmlAdditionalForm .= "<input type='hidden' value='".$intLoggedUserID."' name='activeUserID'>";
          $htmlAdditionalForm .= "<input type='hidden' value='allActive' name='chosenCal'>";
 
-         $htmlAdditionalForm .= "</form>";
+         $htmlAdditionalForm .= "</form></p>";
 
         /**
          * *****************************************************
