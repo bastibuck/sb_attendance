@@ -77,6 +77,10 @@ $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['meetingTime'] = array
 // Start- und Endzeiten eines Termin können mitkopiert werden
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['startTime']['eval']['doNotCopy'] = false;
 $GLOBALS['TL_DCA']['tl_calendar_events']['fields']['endTime']['eval']['doNotCopy'] = false;
+$GLOBALS['TL_DCA']['tl_calendar_events']['fields']['startDate']['eval']['doNotCopy'] = false;
+
+$GLOBALS['TL_DCA']['tl_calendar_events']['fields']['addTime']['eval']['doNotCopy'] = false;
+$GLOBALS['TL_DCA']['tl_calendar_events']['fields']['published']['eval']['doNotCopy'] = false;
 
 /**
  * Class tl_attendanceEvents

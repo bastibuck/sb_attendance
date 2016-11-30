@@ -134,8 +134,8 @@ class tl_attendanceMember extends tl_member
             \sb_attendanceModel::deleteFromAttendanceTable('m_id', $memberId);
         } 
         else 
-        {   
-            UpdateAttendance::al_createAttendance("all");                   
+        {               
+            //UpdateAttendance::al_createAttendance("all");                   
         }
     }
     

@@ -23,14 +23,14 @@ $GLOBALS['TL_DCA']['tl_attendance'] = array
         (
             'keys' => array
             (
-                // Schlüssel angelegt, id als Primärschlüssel der Tabelle, 
+                // Schlüssel angelegt, id als Primärschlüssel der Tabelle,
                 // Kombination aus e_id, m_id und attendance_id muss einzigartig sein
                 'id' => 'primary',
                 'e_id,m_id,attendance_id' => 'unique'
             )
         )
     ),
-    
+
     // Fields
     'fields' => array
     (
@@ -53,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_attendance'] = array
         'm_id' => array
         (
             'sql' => "int(10) unsigned NOT NULL"
-        ),
+        ),        
         // Flag-Variable für Anwesenheitsstatus
         'attendance' => array
         (

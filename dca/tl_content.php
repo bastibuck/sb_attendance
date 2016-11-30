@@ -14,21 +14,11 @@
 /**
  * Table tl_content
  */
- 
-// Palette für Vollansicht
 $GLOBALS['TL_DCA']['tl_content']['palettes']['attendance_list_viewer'] = 
            '{type_legend},type,headline;
             {attendance_list_legend},attendance_list,al_tips;
             {protected_legend:hide},protected;
             {expert_legend:hide},invisible,cssID,space';
-            
-// Palette für Kompaktansicht
-$GLOBALS['TL_DCA']['tl_content']['palettes']['attendance_list_compact'] = 
-           '{type_legend},type,headline;
-            {attendance_list_legend},attendance_list,al_tips;
-            {protected_legend:hide},protected;
-            {expert_legend:hide},invisible,cssID,space';
-            
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['attendance_list'] = array
 (
