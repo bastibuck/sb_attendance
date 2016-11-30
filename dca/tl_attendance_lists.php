@@ -19,7 +19,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
     // Config
     'config' => array
     (
-        'dataContainer'     => 'Table',        
+        'dataContainer'     => 'Table',
         'onsubmit_callback' => array
         (
             array('UpdateAttendance', 'al_createAttendance'),
@@ -44,7 +44,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         ),
         'label' => array
         (
-            'fields'         => array('title'),            
+            'fields'         => array('title'),
             'label_callback' => array('tl_attendance_label', 'attendanceLabel')
         ),
         'global_operations' => array
@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         '__selector__'  => array('al_checkCoach','al_checkCaptain','al_checkAdmin'),
         'default' => '  {title_legend},title;
                         {attendance_calender_legend},al_pickCalendar;
-                        {attendance_member_legend},al_pickMembers;                        
+                        {attendance_member_legend},al_pickMembers;
                         {attendance_statusOptions_legend},al_defaultStatus,al_disableThird,al_askReason,al_expireTime;
                         {attendance_memberRoles_legend},al_checkCoach,al_checkCaptain,al_checkAdmin,al_roleAdvice;
                         {attendance_descriptions:hide},al_CoachDescription,al_CaptainDescription,al_AttendantsDescription;
@@ -138,13 +138,13 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             (
                 'mandatory' => true,
                 'multiple'  => true
-            )            
+            )
         ),
         'al_pickMembers' => array
         (
             'label'      => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_pickMembers'],
             'inputType'  => 'checkbox',
-            'foreignKey' => 'tl_member_group.name',            
+            'foreignKey' => 'tl_member_group.name',
             'sql'        => "blob NULL",
             'eval'       => array
             (
@@ -247,13 +247,14 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         (
             'label'             => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_Coach'],
             'exclude'           => true,
-            'inputType'         => 'radio',
-            'options_callback'  => array ('tl_attendance_label', 'groupMembers'),                    
-            'sql'               => "varchar(10) NOT NULL default ''",
+            'inputType'         => 'checkbox',
+            'options_callback'  => array ('tl_attendance_label', 'groupMembers'),
+            'sql'               => "blob NULL",
             'eval'              => array
             (
                 'tl_class' => 'm12 clr',
-                'mandatory' => true
+                'mandatory' => true,
+								'multiple'  => true
             )
         ),
         'al_checkCaptain' => array
@@ -273,7 +274,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'label'             => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_Captain'],
             'exclude'           => true,
             'inputType'         => 'radio',
-            'options_callback'  => array ('tl_attendance_label', 'groupMembers'),                    
+            'options_callback'  => array ('tl_attendance_label', 'groupMembers'),
             'sql'               => "varchar(10) NOT NULL default ''",
             'eval'              => array
             (
@@ -298,7 +299,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'label'             => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_Admin'],
             'exclude'           => true,
             'inputType'         => 'radio',
-            'options_callback'  => array ('tl_attendance_label', 'groupMembers'),                    
+            'options_callback'  => array ('tl_attendance_label', 'groupMembers'),
             'sql'               => "varchar(10) NOT NULL default ''",
             'eval'              => array
             (
@@ -322,10 +323,10 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CoachDescription'],
             'inputType' => 'text',
-            'exclude'   => true,                        
+            'exclude'   => true,
             'sql'       => "varchar(255) NOT NULL default ''",
             'eval'      => array
-            (                
+            (
                 'maxlength' => 255
             )
         ),
@@ -333,10 +334,10 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_CaptainDescription'],
             'inputType' => 'text',
-            'exclude'   => true,                        
+            'exclude'   => true,
             'sql'       => "varchar(255) NOT NULL default ''",
             'eval'      => array
-            (                
+            (
                 'maxlength' => 255
             )
         ),
@@ -344,10 +345,10 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_AttendantsDescription'],
             'inputType' => 'text',
-            'exclude'   => true,                        
+            'exclude'   => true,
             'sql'       => "varchar(255) NOT NULL default ''",
             'eval'      => array
-            (                
+            (
                 'maxlength' => 255
             )
         ),
@@ -359,7 +360,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'options'   => array('username', 'firstname', 'lastname', 'first_last'),
             'reference' => &$GLOBALS['TL_LANG']['tl_attendance_lists']['al_name'],
             'eval'      => array
-            (                
+            (
                 'tl_class' => 'm12 clr'
             )
         ),
@@ -369,7 +370,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'exclude'   => true,
             'inputType' => 'select',
             'options'   => array('flat_thick', 'flat_thick_alternative', 'flat_thin'),
-            'reference' => &$GLOBALS['TL_LANG']['tl_attendance_lists'],            
+            'reference' => &$GLOBALS['TL_LANG']['tl_attendance_lists'],
             'sql'       => "varchar(32) NOT NULL default ''",
             'eval'      => array
             (
@@ -395,7 +396,7 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
             'sql'       => "varchar(1) NOT NULL default ''",
             'eval'      => array
             (
-                'tl_class' => 'm12'                
+                'tl_class' => 'm12'
             )
         )
     )
@@ -410,16 +411,16 @@ $GLOBALS['TL_DCA']['tl_attendance_lists'] = array
  * @author     Sebastian Buck
  * @package    Attendance
  */
-class tl_attendance_label extends Backend 
+class tl_attendance_label extends Backend
 {
     // Funktion liefert Beschriftung der Anwesenheitslisten in der Übersicht zurück
-    public function attendanceLabel($arrRow) 
+    public function attendanceLabel($arrRow)
     {
         // Kalender holen
         $cals = unserialize($arrRow['al_pickCalendar']);
 
         $calendars = array();
-        foreach ($cals as $cal) 
+        foreach ($cals as $cal)
         {
             $objParent = $this->Database
                             ->prepare("SELECT title FROM tl_calendar WHERE id=?")
@@ -432,7 +433,7 @@ class tl_attendance_label extends Backend
         $members = unserialize($arrRow['al_pickMembers']);
 
         $memberGroups = array();
-        foreach ($members as $member) 
+        foreach ($members as $member)
         {
             $objParent = $this->Database
                             ->prepare("SELECT name FROM tl_member_group WHERE id=?")
@@ -450,12 +451,12 @@ class tl_attendance_label extends Backend
 
         return $label;
     }
-    
+
     // Funktion liefert Namen für Trainer/Kapitän zurück
-    public function groupMembers($arrRow) 
-    {       
+    public function groupMembers($arrRow)
+    {
         //Ausgewählte Gruppen laden
-        $al_mems = unserialize(\sb_attendanceModel::findSettings($arrRow->id, 'al_pickMembers'));            
+        $al_mems = unserialize(\sb_attendanceModel::findSettings($arrRow->id, 'al_pickMembers'));
         // Mitglieder laden
         $objMembers = $this->Database->prepare("SELECT id,firstname,lastname,groups FROM tl_member")
                 ->execute();
@@ -469,44 +470,44 @@ class tl_attendance_label extends Backend
             {
                 if (in_array($group, $al_mems))
                 {
-                    $arrMembers[$objMembers->id] = $objMembers->firstname . ' ' . $objMembers->lastname;
+                  $arrMembers[$objMembers->id] = $objMembers->firstname . ' ' . $objMembers->lastname;
                 }
             }
         }
-        
-        return $arrMembers;         
+
+        return $arrMembers;
     }
 }
 
 /**
  * Class RemoveMemberRoles
  *
- * Zusätzliche Methode, um gesetzte Mitgliederrollen zu entfernen, 
+ * Zusätzliche Methode, um gesetzte Mitgliederrollen zu entfernen,
  * wenn das entsprechende Häkchen entfernt wurde
  *
  * @copyright  Sebastian Buck 2014
  * @author     Sebastian Buck
  * @package    Attendance
  */
-class RemoveMemberRoles extends Backend 
-{    
-    public function removeRole($arrRow) 
+class RemoveMemberRoles extends Backend
+{
+    public function removeRole($arrRow)
     {
         $id = $arrRow->id;
-        
+
         if (!$this->Input->post('al_checkCoach'))
         {
             \sb_attendanceModel::removeRole('al_Coach', $id);
-        }  
-        
+        }
+
         if (!$this->Input->post('al_checkCaptain'))
         {
             \sb_attendanceModel::removeRole('al_Captain', $id);
-        } 
-        
+        }
+
         if (!$this->Input->post('al_checkAdmin'))
         {
             \sb_attendanceModel::removeRole('al_Admin', $id);
-        } 
+        }
     }
 }

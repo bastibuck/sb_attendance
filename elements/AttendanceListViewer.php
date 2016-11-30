@@ -174,7 +174,19 @@ class AttendanceListViewer extends \ContentElement
         }
     }
 
-    /**
+		public function generate()
+	  {
+	    if (TL_MODE == 'BE')
+	    {
+	    	$this->Template = new BackendTemplate('be_wildcard');
+	    	$this->Template->wildcard = '### Anwesenheitsliste ###';
+	    	return $this->Template->parse();
+	    }
+
+	    return parent::generate();
+	  }
+
+		/**
      * Generate the module
      */
     protected function compile()
@@ -292,7 +304,8 @@ class AttendanceListViewer extends \ContentElement
             }
 
         // Trainer suchen
-        $intCoachID = \sb_attendanceModel::findMemberRoles('al_Coach', $attendance_ID);
+        // $intCoachID = \sb_attendanceModel::findMemberRoles('al_Coach', $attendance_ID);
+				$arrCoachIDs = deserialize(\sb_attendanceModel::findMemberRoles('al_Coach', $attendance_ID));
 
         // Kapitän suchen
         $intCaptainID = \sb_attendanceModel::findMemberRoles('al_Captain', $attendance_ID);
@@ -557,7 +570,8 @@ class AttendanceListViewer extends \ContentElement
             $termin['startDate'] = "<p class='al_date'>" . date($GLOBALS['TL_CONFIG']['dateFormat'], $termin['startDate']);
 
             // aktive Spieleranzahl holen (abhängig ob ein Trainer definiert ist oder nicht)
-            $resultSpielerzahl = \sb_attendanceModel::findNumberOfParticipants($termin['id'], $intCoachID, $attendance_ID);
+            // $resultSpielerzahl = \sb_attendanceModel::findNumberOfParticipants($termin['id'], $intCoachID, $attendance_ID);
+						$resultSpielerzahl = \sb_attendanceModel::findNumberOfParticipants($termin['id'], $arrCoachIDs, $attendance_ID);
 
             if ($strAttendantsDescription)
             {
@@ -572,7 +586,8 @@ class AttendanceListViewer extends \ContentElement
 
             $termin['summe'] = $number;
 
-            if (($intLoggedUserID == $intCoachID) || ($intLoggedUserID == $intAdminID))
+            // if (($intLoggedUserID == $intCoachID) || ($intLoggedUserID == $intAdminID))
+						if ((in_array($intLoggedUserID, $arrCoachIDs)) || ($intLoggedUserID == $intAdminID))
             {
                 $termin['cancelEvent'] = "
                     <form onsubmit='return confirm(\"".$GLOBALS['TL_LANG']['al_frontend']['cancel']."?\");' action='" . Environment::get('requestUri') . "' method='POST'>
@@ -626,17 +641,22 @@ class AttendanceListViewer extends \ContentElement
         }
 
         // Trainer an erste Stelle im Array sortieren
-        $i = 1;
-        foreach ($arraySpieler as $trainer)
+        $i = 0;
+				$arrTrainer = array();
+				foreach ($arraySpieler as $trainer)
         {
-            if ($trainer['id'] == $intCoachID)
+            // if ($trainer['id'] == $intCoachID)
+						if (in_array($trainer['id'], $arrCoachIDs))
             {
-                array_unshift($arraySpieler, $trainer);
-                unset($arraySpieler[$i]);
+							$arrTrainer[] = $trainer;
+              // array_unshift($arraySpieler, $trainer);
+              unset($arraySpieler[$i]);
             }
             $i++;
         }
+				$arraySpieler = array_merge ($arrTrainer, $arraySpieler);
 
+				$CoachCount = 1;
         // Pro Spieler eine Reihe erzeugen
         foreach ($arraySpieler as $reihe)
         {
@@ -668,7 +688,8 @@ class AttendanceListViewer extends \ContentElement
                     $flagEdit = false;
 
                     // Abhängig von Nutzerrolle die Felder editierbar machen oder nur als Bilder ausgeben
-                    if ($intLoggedUserID == $intCoachID || $intLoggedUserID == $intAdminID)
+                    // if ($intLoggedUserID == $intCoachID || $intLoggedUserID == $intAdminID)
+										if (in_array($intLoggedUserID, $arrCoachIDs) || $intLoggedUserID == $intAdminID)
                     {
                         $flagEdit = true;
                         if ($i <= $intExpiredEvents)
@@ -719,7 +740,8 @@ class AttendanceListViewer extends \ContentElement
             $row += 1;
 
             // Trainerrolle Hinweis hinzufügen
-            if ($intCoachID == $reihe['id'])
+            // if ($intCoachID == $reihe['id'])
+						if (in_array($reihe['id'], $arrCoachIDs))
             {
                 // Optionale Bezeichnung zuweisen, sonst standard Bezeichnung
                 if ($strCoachDescription)
@@ -761,9 +783,13 @@ class AttendanceListViewer extends \ContentElement
                 $strUserHTMLclass .= " logged_user";
             }
 
-            if ($intCoachID == $reihe['id'])
+            // if ($intCoachID == $reihe['id'])
+						if (in_array($reihe['id'], $arrCoachIDs))
             {
-                $strUserHTMLclass .= " coach";
+							if ($CoachCount == count($arrCoachIDs)) {
+								$strUserHTMLclass .= " coach";
+							}
+							$CoachCount++;
             }
 
             $strName = "<tr class='" . $strUserHTMLclass . "'><td class='col_member'>" . $strName . "</td>";

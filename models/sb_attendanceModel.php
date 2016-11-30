@@ -150,13 +150,13 @@ if (!class_exists('sb_attendanceModel'))
         {
             $statement = "SELECT id FROM tl_attendance WHERE e_id=? AND attendance_id=? AND (attendance=? OR attendance=?)";
             if ($coach)
-            {
-                $statement .= " AND m_id!=?";
+            {							
+              $statement .= " AND (m_id NOT IN (".implode(',',$coach)."))";
             }
 
             $result = Database::getInstance()
                     ->prepare(''.$statement.'')
-                    ->execute($termin,$attendance_ID,1,3,$coach);
+                    ->execute($termin, $attendance_ID, 1, 3);
 
             return $result->count();
         }
