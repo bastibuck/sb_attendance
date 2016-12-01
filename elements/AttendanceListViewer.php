@@ -643,17 +643,18 @@ class AttendanceListViewer extends \ContentElement
         // Trainer an erste Stelle im Array sortieren
         $i = 0;
 				$arrTrainer = array();
-				foreach ($arraySpieler as $trainer)
+				foreach ($arraySpieler as $key => $trainer)
         {
             // if ($trainer['id'] == $intCoachID)
 						if (in_array($trainer['id'], $arrCoachIDs))
             {
 							$arrTrainer[] = $trainer;
               // array_unshift($arraySpieler, $trainer);
-              unset($arraySpieler[$i]);
+              unset($arraySpieler[$key]);
             }
             $i++;
         }
+
 				$arraySpieler = array_merge ($arrTrainer, $arraySpieler);
 
 				$CoachCount = 1;
