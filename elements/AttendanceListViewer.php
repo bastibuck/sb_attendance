@@ -234,12 +234,12 @@ class AttendanceListViewer extends \ContentElement
         {
             // String für DB Abfrage anpassen, wenn Vor- und Nachname ausgegeben werden sollen
             $strNameSetting = "firstname, t1.lastname";
-            $strNameSort = "t1.firstname, t1.lastname";
+            $strNameSort = "LOWER (t1.firstname), LOWER (t1.lastname)";
             $flagFirst_Last = 1;
         }
         else
         {
-            $strNameSort = $strNameSetting;
+            $strNameSort = "LOWER (". $strNameSetting.")";
         }
 
         // aktive SpielerIDs aus tl_attendance holen
